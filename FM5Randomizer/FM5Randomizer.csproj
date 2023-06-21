@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FM5Randomizer.GameMethods.cs\FM5Randomizer.GameMethods.csproj" />
+    <ProjectReference Include="..\FM5Randomizer.Gameproperties\FM5Randomizer.GameProperties.csproj" />
+    <ProjectReference Include="..\FM5Randomizer.RandomizerSetting\FM5Randomizer.RandomizerSetting.csproj" />
+    <ProjectReference Include="..\FM5Randomizer.StageInfo\FM5Randomizer.GameEnum.csproj" />
+  </ItemGroup>
+
+</Project>

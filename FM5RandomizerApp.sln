@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FM5Randomizer.GameEnum", "FM5Randomizer.StageInfo\FM5Randomizer.GameEnum.csproj", "{42A876C6-AFAA-4896-B840-9E3B9CD1FC2D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FM5Randomizer.GameMethods", "FM5Randomizer.GameMethods.cs\FM5Randomizer.GameMethods.csproj", "{7FECB138-778A-4049-B233-95280993C651}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FM5Randomizer", "FM5Randomizer\FM5Randomizer.csproj", "{BDE47556-7439-4064-B47C-D7A05189A17C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FM5Randomizer.GameProperties", "FM5Randomizer.Gameproperties\FM5Randomizer.GameProperties.csproj", "{3F253393-2FF9-47CD-9499-F74C25B17235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FM5Randomizer.RandomizerSetting", "FM5Randomizer.RandomizerSetting\FM5Randomizer.RandomizerSetting.csproj", "{B9B0C27C-5913-4A1D-B014-D70FE9974081}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42A876C6-AFAA-4896-B840-9E3B9CD1FC2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A876C6-AFAA-4896-B840-9E3B9CD1FC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A876C6-AFAA-4896-B840-9E3B9CD1FC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A876C6-AFAA-4896-B840-9E3B9CD1FC2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FECB138-778A-4049-B233-95280993C651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FECB138-778A-4049-B233-95280993C651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FECB138-778A-4049-B233-95280993C651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FECB138-778A-4049-B233-95280993C651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDE47556-7439-4064-B47C-D7A05189A17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDE47556-7439-4064-B47C-D7A05189A17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDE47556-7439-4064-B47C-D7A05189A17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDE47556-7439-4064-B47C-D7A05189A17C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F253393-2FF9-47CD-9499-F74C25B17235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F253393-2FF9-47CD-9499-F74C25B17235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F253393-2FF9-47CD-9499-F74C25B17235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F253393-2FF9-47CD-9499-F74C25B17235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9B0C27C-5913-4A1D-B014-D70FE9974081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9B0C27C-5913-4A1D-B014-D70FE9974081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9B0C27C-5913-4A1D-B014-D70FE9974081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9B0C27C-5913-4A1D-B014-D70FE9974081}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D3A33AAF-3A4A-45AC-B4B0-DEC897750B73}
+	EndGlobalSection
+EndGlobal
