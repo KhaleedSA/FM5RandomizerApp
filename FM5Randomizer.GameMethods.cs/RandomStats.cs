@@ -22,7 +22,7 @@ public class RandomStats
     private static void WriteNewEnemyStats()
     {
         // Randomize pilot model
-        if (SettingProperties.Randomize_Model)
+        if (SettingProperties.Randomize_UnitModel || SettingProperties.Randomize_BossModel)
             MyDataTable.ReadWriteStats.SetValue(GetObjectValue.RandomModelID(MyDataTable.ValidEnemyId), 1);
 
         // Randomize pilot lvl

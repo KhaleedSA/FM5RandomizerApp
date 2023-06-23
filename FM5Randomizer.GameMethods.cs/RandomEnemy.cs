@@ -18,29 +18,27 @@ public class RandomEnemy
             var enemyName = MyDataTable.ReadWriteModel.Take(24).ToArray();
             var enemyType = MyDataTable.ReadWriteModel.Skip(64).Take(2).ToArray();
 
-            if (!CheckObjectValue.IsEmptyString(enemyName))
+            if (!GetUnitValue.IsEmptyString(enemyName))
             {
-                if (CheckObjectValue.IsNormalEnemy(enemyType, withBosses:true))
+                if (GetUnitValue.IsNormalEnemy(enemyType, SettingProperties.Randomize_BossModel))
                     MyDataTable.ValidEnemyId.Add(MyDataTable.EnemyId);
 
                 else
                     MyDataTable.InValidEnemyID.Add(MyDataTable.EnemyId);
 
-                if (CheckObjectValue.IsNormalEnemy(enemyType))
+                if (GetUnitValue.IsNormalEnemy(enemyType))
                 {
-                    if(SettingProperties.Randomize_BodyPart)
-                        RandomBody();
-                    if (SettingProperties.Randomize_Weapons)
-                        RandomWeapon();
-                    if(SettingProperties.Randomize_BackPack)
-                        RandomBackPack();
+                    RandomBody(SettingProperties.Randomize_BodyPart);
 
+                    RandomWeapon(SettingProperties.Randomize_Weapons);
+                    
+                    RandomBackPack(SettingProperties.Randomize_BackPack);
+                    
                     fs.Seek(-128, SeekOrigin.Current);
                     fs.Write(MyDataTable.ReadWriteModel, 0, MyDataTable.ReadWriteModel.Length);
                 }
             }
         }
-        
         
         var startingAddress = fs.Position = enemyAddresses.FirstOrDefault() + MyDataTable.JumpToStats;
 
@@ -53,18 +51,30 @@ public class RandomEnemy
         MyDataTable.InValidEnemyID.Clear();
     }
 
-    private static void RandomBody()
+    private static void RandomBody(bool enable)
     {
+        if (!enable)
+            return;
+
         MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHeadID>(), 68);
         MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 70);
         MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 72);
         MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.LegsID>(), 74);
     }
 
-    private static void RandomBackPack() => MyDataTable.ReadWriteModel.SetValue(GetObjectValue.BackPack(), 76);
-
-    private static void RandomWeapon()
+    private static void RandomBackPack(bool enable)
     {
+        if (!enable)
+            return;
+
+        MyDataTable.ReadWriteModel.SetValue(GetObjectValue.BackPack(), 76);
+    }
+
+    private static void RandomWeapon(bool enable)
+    {
+        if (!enable)
+            return;
+
         byte leftArm = MyDataTable.ReadWriteModel.ElementAt(78);
         byte rightArm = MyDataTable.ReadWriteModel.ElementAt(80);
         byte leftShoulder = MyDataTable.ReadWriteModel.ElementAt(82);

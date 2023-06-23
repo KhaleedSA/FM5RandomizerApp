@@ -8,6 +8,9 @@ string? path = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.iso").Firs
 using (FileStream fs = new(path, FileMode.Open, FileAccess.ReadWrite))
 {
     UserSetting.ReadWriteSetting(Directory.GetCurrentDirectory());
+
+    HangerPatch.EnableHangerPatch(fs, SettingProperties.Enable_HangarPatch);
+
     Array addresses = Enum.GetValues(typeof(Stage.StageAddress));
 
     foreach (long address in addresses)
