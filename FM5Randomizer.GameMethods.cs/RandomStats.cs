@@ -26,7 +26,7 @@ public class RandomStats
             MyDataTable.ReadWriteStats.SetValue(GetObjectValue.RandomModelID(MyDataTable.ValidEnemyId), 1);
 
         // Randomize pilot lvl
-        if (SettingProperties.Randomize_PilotLvl)
+        if (SettingProperties.Randomize_PilotLvl/* && !SettingProperties.PilotLvl_SamePlayer*/)
             MyDataTable.ReadWriteStats.SetValue((byte)MyDataTable.Rnd.Next(MyDataTable.MinPilotLvl, MyDataTable.MaxPilotLvl), 30);
 
         // Randomize Pilot Body Weapons Lvl

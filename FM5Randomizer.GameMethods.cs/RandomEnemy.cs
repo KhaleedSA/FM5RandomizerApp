@@ -80,25 +80,31 @@ public class RandomEnemy
         byte leftShoulder = MyDataTable.ReadWriteModel.ElementAt(82);
         byte rightShoulder = MyDataTable.ReadWriteModel.ElementAt(84);
 
-        
-        WeaponCheck(leftArm, rightArm, leftShoulder, rightShoulder);
+
+        SetWeaponLeftArm(leftArm);
+        SetWeaponRightArm(leftArm, rightArm);
+        SetWeaponShoulder(leftShoulder, rightShoulder);
     }
 
-    private static void WeaponCheck(byte leftArm, byte rightArm, byte leftShoulder, byte rightShoulder)
+    private static void SetWeaponShoulder(byte leftShoulder, byte rightShoulder)
     {
-        if (leftArm >= 0x01 && leftArm <= 0x42 || leftArm >= 0x5B && leftArm <= 0x7E || leftArm == 0x97)
+        // Launcher left shoulder weapon
+        if (leftShoulder >= 0x01 && leftShoulder <= 0x2A)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.FireArm_Weapon(), 78);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
+            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Launcher_Weapon(), 82);
+            MyDataTable.ReadWriteModel.SetValue((byte)0, 83);
         }
 
-        // CloseCombat left Weapon
-        else if (leftArm >= 0x43 && leftArm <= 0x5A || leftArm >= 0x7F && leftArm <= 0x96)
+        // Launcher right shoulder weapon
+        else if (rightShoulder >= 0x01 && rightShoulder <= 0x2A)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.CloseCombat_Weapon(), 78);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
+            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Launcher_Weapon(), 84);
+            MyDataTable.ReadWriteModel.SetValue((byte)0, 85);
         }
+    }
 
+    private static void SetWeaponRightArm(byte leftArm, byte rightArm)
+    {
         // FireArm right Weapon
         if (rightArm >= 0x01 && rightArm <= 0x42 || rightArm >= 0x5B && rightArm <= 0x7E || rightArm == 0x97)
         {
@@ -113,18 +119,44 @@ public class RandomEnemy
             MyDataTable.ReadWriteModel.SetValue((byte)0, 81);
         }
 
-        // Launcher left shoulder weapon
-        if (leftShoulder >= 0x01 && leftShoulder <= 0x2A)
+        // explotion on right Weapon if true in user setting and left arm dosn't have explosive set
+        else if (rightArm == 0 && SettingProperties.Explode_OnKill)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Launcher_Weapon(), 82);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 83);
+            bool isZero = GetObjectValue.Explotion_Set() == 0 ? true : false;
+
+            if (isZero)
+            {
+                MyDataTable.ReadWriteModel.SetValue((byte)0, 80);
+                MyDataTable.ReadWriteModel.SetValue((byte)0, 81);
+                return;
+            }
+
+            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Explotion_Set(), 80);
+            MyDataTable.ReadWriteModel.SetValue((byte)1, 81);
+        }
+    }
+
+    private static void SetWeaponLeftArm(byte leftArm)
+    {
+        // FireArm left Weapon
+        if (leftArm >= 0x01 && leftArm <= 0x42 || leftArm >= 0x5B && leftArm <= 0x7E || leftArm == 0x97)
+        {
+            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.FireArm_Weapon(), 78);
+            MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
         }
 
-        // Launcher left shoulder weapon
-        else if (rightShoulder >= 0x01 && rightShoulder <= 0x2A)
+        // CloseCombat left Weapon
+        else if (leftArm >= 0x43 && leftArm <= 0x5A || leftArm >= 0x7F && leftArm <= 0x96)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Launcher_Weapon(), 84);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 85);
+            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.CloseCombat_Weapon(), 78);
+            MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
         }
+
+        //// explotion on left Weapon if true in user setting
+        //else if (leftArm == 0 && SettingProperties.Explode_OnKill)
+        //{
+        //    MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Explotion_Set(), 78);
+        //    MyDataTable.ReadWriteModel.SetValue((byte)1, 79);
+        //}
     }
 }

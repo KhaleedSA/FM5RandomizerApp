@@ -48,6 +48,8 @@ public class UserSetting
             writer.WriteEndElement();
             writer.Flush();
         }
+
+        Console.WriteLine($"File [{nameof(RandomizerSetting)}.xml] has been Created");
     }
 
     private static bool GetElementValue(XElement element)

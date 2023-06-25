@@ -80,4 +80,12 @@ public class GetObjectValue
 
         return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
     }
+
+    public static byte Explotion_Set()
+    {
+        _weaponItemsID.Clear();
+        _weaponItemsID.AddRange((IEnumerable<byte>)Enum.GetValues(typeof(WeaponAndItemID.NonWanzer.Explosive_Container)));
+
+        return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
+    }
 }
