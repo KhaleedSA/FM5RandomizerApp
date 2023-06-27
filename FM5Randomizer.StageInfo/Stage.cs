@@ -9,14 +9,14 @@ public class Stage
         ST01 = 0x637070,
         ST02 = 0x6EA090,
         ST03 = 0x831080,
-        ST04 = 0x928090,
+        ST04 = 0x928090,    // potential soft-Lock!!
         ST05 = 0xA60080,
-        ST06 = 0xB59090,
-        ST07 = 0xC920A0,
+        ST06 = 0xB59090,    // potential soft-Lock!!
+        ST07 = 0xC920A0,    // potential soft-Lock!!
         ST08 = 0xE42080,
         ST09 = 0xF3E8D0,
         ST10 = 0x10658D0,
-        ST11 = 0x11E6110,
+        ST11 = 0x11E6110,   // potential soft-Lock!!
         ST12 = 0x14860F0,
         ST13 = 0x16460D0,
         ST14 = 0x17998B0,
@@ -49,7 +49,7 @@ public class Stage
         ST41 = 0x41D2080,
         ST42 = 0x43078D0,
         ST43 = 0x44C48D0,
-        ST44 = 0x45E90E0,
+        ST44 = 0x45E90E0,   // potential soft-Lock!!
         ST45 = 0x477D0D0,
         ST46 = 0x48C58B0,
         ST47 = 0x4A248D0,

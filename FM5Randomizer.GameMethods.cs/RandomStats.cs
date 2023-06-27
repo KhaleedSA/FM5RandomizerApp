@@ -5,6 +5,8 @@ namespace FM5Randomizer.GameMethods;
 
 public class RandomStats
 {
+    private static byte[] ReadOldCoords = new byte[2];
+    private static byte[] ReadNewCoords = new byte[2];
     public static void RandomEnemyStats(FileStream fs)
     {
         fs.Read(MyDataTable.ReadWriteStats, 0, MyDataTable.ReadWriteStats.Length);
@@ -21,6 +23,11 @@ public class RandomStats
 
     private static void WriteNewEnemyStats()
     {
+        // Fix potential soft-Lock!!
+        Array.Clear(ReadOldCoords);
+        Array.Clear(ReadNewCoords);
+        FixCoordinate();
+
         // Randomize pilot model
         if (SettingProperties.Randomize_UnitModel || SettingProperties.Randomize_BossModel)
             MyDataTable.ReadWriteStats.SetValue(GetObjectValue.RandomModelID(MyDataTable.ValidEnemyId), 1);
@@ -33,7 +40,7 @@ public class RandomStats
         if (SettingProperties.Randomize_WeaponsLvl)
         {
             MyDataTable.ReadWriteStats.SetValue((byte)MyDataTable.Rnd.Next(MyDataTable.MinLvl, MyDataTable.MaxLvl), 93);
-            
+
             for (int i = 0; i < 2; i++)
                 MyDataTable.ReadWriteStats.SetValue((byte)MyDataTable.Rnd.Next(MyDataTable.MinLvl, MyDataTable.MaxLvl), 96 + i);
         }
@@ -51,5 +58,16 @@ public class RandomStats
             for (int i = 0; i < 8; i++)
                 MyDataTable.ReadWriteStats.SetValue(GetObjectValue.Repair_Ammo(), 208 + i);
         }
+    }
+
+    private static void FixCoordinate()
+    {
+        byte? enemyCoordinate_X = (byte?)MyDataTable.ReadWriteStats.GetValue(18);
+        byte? enemyCoordinate_Y = (byte?)MyDataTable.ReadWriteStats.GetValue(19);
+        ReadOldCoords.SetValue(enemyCoordinate_X, 0);
+        ReadOldCoords.SetValue(enemyCoordinate_Y, 1);
+        ReadNewCoords = SoftLockFixer.NewCoords(MyDataTable.ReadStageAddress, ReadOldCoords);
+        MyDataTable.ReadWriteStats.SetValue(ReadNewCoords.ElementAt(0), 18);
+        MyDataTable.ReadWriteStats.SetValue(ReadNewCoords.ElementAt(1), 19);
     }
 }

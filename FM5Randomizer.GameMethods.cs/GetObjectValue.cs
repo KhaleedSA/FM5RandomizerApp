@@ -5,7 +5,7 @@ namespace FM5Randomizer.GameMethods;
 
 public class GetObjectValue
 {
-    private static readonly List<byte> _weaponItemsID = new();
+    public static readonly List<byte> _weaponItemsID = new();
 
     public static byte RandomModelID(List<byte> ModelsID) => ModelsID[(byte)MyDataTable.Rnd.Next(ModelsID.Count)];
 
@@ -77,14 +77,6 @@ public class GetObjectValue
         _weaponItemsID.AddRange((IEnumerable<byte>)Enum.GetValues(typeof(WeaponAndItemID.CloseCombat.RodID)));
         _weaponItemsID.AddRange((IEnumerable<byte>)Enum.GetValues(typeof(WeaponAndItemID.CloseCombat.ShieldID)));
         _weaponItemsID.AddRange((IEnumerable<byte>)Enum.GetValues(typeof(WeaponAndItemID.CloseCombat.PileBunkerID)));
-
-        return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
-    }
-
-    public static byte Explotion_Set()
-    {
-        _weaponItemsID.Clear();
-        _weaponItemsID.AddRange((IEnumerable<byte>)Enum.GetValues(typeof(WeaponAndItemID.NonWanzer.Explosive_Container)));
 
         return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
     }

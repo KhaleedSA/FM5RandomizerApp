@@ -1,5 +1,4 @@
-﻿using FM5Randomizer;
-using FM5Randomizer.GameEnum;
+﻿using FM5Randomizer.GameEnum;
 using FM5Randomizer.GameMethods;
 using FM5Randomizer.GameProperties;
 using FM5Randomizer.RandomizerSetting;
@@ -30,6 +29,7 @@ using (FileStream fs = new(path, FileMode.Open, FileAccess.ReadWrite))
 
     foreach (long address in addresses)
     {
+        MyDataTable.ReadStageAddress = address;
         MyRandomize.GameRandom(fs, GetObjectValue.GetListOfAddresses(fs, address, MyDataTable.ModelScriptSize, MyDataTable.ModelEntitySize));
     }
 

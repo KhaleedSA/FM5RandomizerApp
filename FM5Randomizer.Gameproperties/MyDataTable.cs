@@ -1,15 +1,17 @@
-﻿namespace FM5Randomizer.GameProperties;
+﻿using FM5Randomizer.GameEnum;
+
+namespace FM5Randomizer.GameProperties;
 
 public class MyDataTable
 {
     public static Random Rnd = new(Guid.NewGuid().GetHashCode());
+    public static long ReadStageAddress {  get; set; }
     public static byte EnemyId { get; set; } = 0;
     public static List<byte> ValidEnemyId = new();
     public static List<byte> InValidEnemyID = new();
 
     public static byte[] ReadWriteModel = new byte[128];
     public static byte[] ReadWriteStats = new byte[256];
-
 
     #region Object Size
     public const int ModelScriptSize = 3328;
