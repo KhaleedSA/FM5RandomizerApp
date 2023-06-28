@@ -50,7 +50,7 @@ public class Stage
         ST42 = 0x43078D0,
         ST43 = 0x44C48D0,
         ST44 = 0x45E90E0,   // potential soft-Lock!!
-        ST45 = 0x477D0D0,
+        ST45 = 0x477D0D0,   // potential soft-Lock!!
         ST46 = 0x48C58B0,
         ST47 = 0x4A248D0,
         ST48 = 0x4B490C0,

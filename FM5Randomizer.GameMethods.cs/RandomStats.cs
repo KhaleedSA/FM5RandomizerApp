@@ -66,7 +66,7 @@ public class RandomStats
         byte? enemyCoordinate_Y = (byte?)MyDataTable.ReadWriteStats.GetValue(19);
         ReadOldCoords.SetValue(enemyCoordinate_X, 0);
         ReadOldCoords.SetValue(enemyCoordinate_Y, 1);
-        ReadNewCoords = SoftLockFixer.NewCoords(MyDataTable.ReadStageAddress, ReadOldCoords);
+        ReadNewCoords = SoftLockFixer.SetNew_Coordinates(MyDataTable.ReadStageAddress, ReadOldCoords);
         MyDataTable.ReadWriteStats.SetValue(ReadNewCoords.ElementAt(0), 18);
         MyDataTable.ReadWriteStats.SetValue(ReadNewCoords.ElementAt(1), 19);
     }
