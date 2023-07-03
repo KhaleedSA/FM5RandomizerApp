@@ -97,18 +97,26 @@ public class RandomEnemy
         {
             MyDataTable.ReadWriteModel.SetValue(GetObjectValue.FireArm_Weapon(), 78);
             MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
+            return;
         }
 
         // CloseCombat left Weapon
-        else if (leftArm >= 0x43 && leftArm <= 0x5A || leftArm >= 0x7F && leftArm <= 0x96)
+        if (leftArm >= 0x43 && leftArm <= 0x5A || leftArm >= 0x7F && leftArm <= 0x96)
         {
             MyDataTable.ReadWriteModel.SetValue(GetObjectValue.CloseCombat_Weapon(), 78);
             MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
+            return;
         }
     }
 
     private static void SetWeaponRightArm(byte rightArm)
     {
+        byte? checkValue = (byte?)MyDataTable.ReadWriteModel.GetValue(81);
+
+        // exit if unit already has an explotion set.
+        if (_Explotion.Contains(rightArm) && checkValue == 1)
+            return;
+
         // explotion on right Weapon if true in user setting
         if (rightArm == 0 && SettingProperties.Explode_OnKill)
         {

@@ -19,6 +19,12 @@ public class SoftLockFixer
     private static readonly Dictionary<byte, Coordinates> _PotentialSoftLocks = new();
     private static readonly Dictionary<byte, Coordinates> _FixSoftLocks = new();
 
+    /// <summary>
+    /// Retrun new Coordinates for some stages.
+    /// </summary>
+    /// <param name="stageAddress"> Stage address where there potential soft-lock are.</param>
+    /// <param name="coords">Old Coordinates to match the soft-lock list</param>
+    /// <returns>New coordinates. [X, Y]</returns>
     public static byte[] SetNew_Coordinates(long stageAddress, byte[] coords)
     {
         _PotentialSoftLocks.Clear();
@@ -31,12 +37,22 @@ public class SoftLockFixer
             (long)Stage.StageAddress.ST06 => FixStage06(coords),
             (long)Stage.StageAddress.ST07 => FixStage07(coords),
             (long)Stage.StageAddress.ST11 => FixStage11(coords),
+            (long)Stage.StageAddress.ST17 => FixStage17(coords),
+            (long)Stage.StageAddress.ST19 => FixStage19(coords),
+            (long)Stage.StageAddress.ST23 => FixStage23(coords),
             (long)Stage.StageAddress.ST44 => FixStage44(coords),
             (long)Stage.StageAddress.ST45 => FixStage45(coords),
             _ => coords,
         };
     }
 
+    /// <summary>
+    /// Fix Coordinates by cheking old coordinates with potential SoftLocks list
+    /// </summary>
+    /// <param name="potentialSoftLocks">Potential SoftLocks coordinates list</param>
+    /// <param name="fixSoftLocks">New coordinates list</param>
+    /// <param name="coords">Old Coordinates to match the soft-lock list</param>
+    /// <returns>New modified coordinates</returns>
     private static byte[] Coordinates_Fixer(Dictionary<byte, Coordinates> potentialSoftLocks, Dictionary<byte, Coordinates> fixSoftLocks, byte[] coords)
     {
         for (byte i = 0; i < potentialSoftLocks.Count; i++)
@@ -102,7 +118,7 @@ public class SoftLockFixer
 
         return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);
     }
-    
+
     private static byte[] FixStage11(byte[] coords)
     {
         #region Potential Soft Locks Coordinates
@@ -121,6 +137,53 @@ public class SoftLockFixer
         _FixSoftLocks.Add(3, new Coordinates(0x26, 0x17));
         _FixSoftLocks.Add(4, new Coordinates(0x17, 0x28));
         _FixSoftLocks.Add(5, new Coordinates(0x05, 0x17));
+        #endregion
+
+        return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);
+    }
+    
+    private static byte[] FixStage17(byte[] coords)
+    {
+        #region Potential Soft Locks Coordinates
+        _PotentialSoftLocks.Add(0, new Coordinates(0x12, 0x1C));
+        _PotentialSoftLocks.Add(1, new Coordinates(0x15, 0x14));
+        _PotentialSoftLocks.Add(2, new Coordinates(0x15, 0x12));
+        #endregion
+
+        #region Fix Soft Locks Coordinates
+        _FixSoftLocks.Add(0, new Coordinates(0x13, 0x1B));
+        _FixSoftLocks.Add(1, new Coordinates(0x15, 0x16));
+        _FixSoftLocks.Add(2, new Coordinates(0x14, 0x13));
+        #endregion
+
+        return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);
+    }
+
+    private static byte[] FixStage19(byte[] coords)
+    {
+        #region Potential Soft Locks Coordinates
+        _PotentialSoftLocks.Add(0, new Coordinates(0x02, 0x16));
+        _PotentialSoftLocks.Add(1, new Coordinates(0x05, 0x02));
+        _PotentialSoftLocks.Add(2, new Coordinates(0x1F, 0x1F));
+        #endregion
+
+        #region Fix Soft Locks Coordinates
+        _FixSoftLocks.Add(0, new Coordinates(0x04, 0x16));
+        _FixSoftLocks.Add(1, new Coordinates(0x05, 0x06));
+        _FixSoftLocks.Add(2, new Coordinates(0x1B, 0x1C));
+        #endregion
+
+        return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);
+    }
+
+    private static byte[] FixStage23(byte[] coords)
+    {
+        #region Potential Soft Locks Coordinates
+        _PotentialSoftLocks.Add(0, new Coordinates(0x0F, 0x02));
+        #endregion
+
+        #region Fix Soft Locks Coordinates
+        _FixSoftLocks.Add(0, new Coordinates(0x11, 0x08));
         #endregion
 
         return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);

@@ -56,8 +56,7 @@ public class UserSetting
     {
         try
         {
-            bool result = XmlConvert.ToBoolean(element.Attribute("xmlns").Value);
-            return result;
+            return XmlConvert.ToBoolean(element.Attribute("xmlns").Value);
         }
         catch (Exception ex)
         {

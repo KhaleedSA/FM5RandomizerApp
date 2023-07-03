@@ -4,7 +4,6 @@ public class Stage
 {
 	public enum StageAddress : long
 	{
-
         //ST00 = 0x627530,
         ST01 = 0x637070,
         ST02 = 0x6EA090,
@@ -22,13 +21,13 @@ public class Stage
         ST14 = 0x17998B0,
         ST15 = 0x18E88E0,
         ST16 = 0x1AC18E0,
-        ST17 = 0x1C1A8B0,
+        ST17 = 0x1C1A8B0,   // potential soft-Lock!!
         ST18 = 0x1D8D0A0,
-        ST19 = 0x1F050C0,
+        ST19 = 0x1F050C0,   // potential soft-Lock!!
         ST20 = 0x20C88D0,
         ST21 = 0x225C8C0,
         ST22 = 0x23770D0,
-        ST23 = 0x25628B0,
+        ST23 = 0x25628B0,   // potential soft-Lock!!
         ST24 = 0x26C50F0,
         ST25 = 0x2869090,
         ST26 = 0x29CB100,

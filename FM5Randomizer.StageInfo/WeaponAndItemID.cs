@@ -345,6 +345,9 @@ public class WeaponAndItemID
 
         public enum Tank : byte
         {
+            TN0x23 = 0x23,
+            TN0x24 = 0x24,
+            TN0x25 = 0x25,
             TN0x2A = 0x2A,
             TN0x2B = 0x2B,
             TN0x2C = 0x2C,
