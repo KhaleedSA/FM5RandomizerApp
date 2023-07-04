@@ -42,6 +42,7 @@ public class SoftLockFixer
             (long)Stage.StageAddress.ST23 => FixStage23(coords),
             (long)Stage.StageAddress.ST44 => FixStage44(coords),
             (long)Stage.StageAddress.ST45 => FixStage45(coords),
+            (long)Stage.StageAddress.ST49 => FixStage49(coords),
             _ => coords,
         };
     }
@@ -212,6 +213,21 @@ public class SoftLockFixer
         #region Fix Soft Locks Coordinates
         _FixSoftLocks.Add(0, new Coordinates(0x05, 0x0E));
         _FixSoftLocks.Add(1, new Coordinates(0x1C, 0x0B));
+        #endregion
+
+        return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);
+    }
+    
+    private static byte[] FixStage49(byte[] coords)
+    {
+        #region Potential Soft Locks Coordinates
+        _PotentialSoftLocks.Add(0, new Coordinates(0x18, 0x03));
+        _PotentialSoftLocks.Add(1, new Coordinates(0x09, 0x0F));
+        #endregion
+
+        #region Fix Soft Locks Coordinates
+        _FixSoftLocks.Add(0, new Coordinates(0x1A, 0x03));
+        _FixSoftLocks.Add(1, new Coordinates(0x0C, 0x0F));
         #endregion
 
         return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);

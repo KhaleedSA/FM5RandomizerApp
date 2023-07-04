@@ -35,18 +35,16 @@ public class RandomStats
             MyDataTable.Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MyDataTable.MinHealth, MyDataTable.MaxHealth), 10);
             MyDataTable.Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MyDataTable.MinHealth, MyDataTable.MaxHealth), 12);
             MyDataTable.Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MyDataTable.MinHealth, MyDataTable.MaxHealth), 14);
-
         } 
         
         // Randomize Wanzer Health Value
-        if (!SettingProperties.Randomize_HealthValue)
-        {
-            MyDataTable.Wanzer.Stats().SetValue((byte)100, 8);
-            MyDataTable.Wanzer.Stats().SetValue((byte)100, 10);
-            MyDataTable.Wanzer.Stats().SetValue((byte)100, 12);
-            MyDataTable.Wanzer.Stats().SetValue((byte)100, 14);
-
-        }
+        //if (!SettingProperties.Randomize_HealthValue)
+        //{
+        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 8);
+        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 10);
+        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 12);
+        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 14);
+        //}
 
         // Randomize pilot model
         if (SettingProperties.Randomize_UnitModel || SettingProperties.Randomize_BossModel)

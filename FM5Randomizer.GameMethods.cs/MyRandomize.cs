@@ -2,8 +2,6 @@
 
 public class MyRandomize
 {
-    public static void GameRandom(FileStream fs, List<long> enemyAddresses)
-    {
-        RandomEnemy.RandomEnemyModel(fs, enemyAddresses);
-    } 
+    public static void GameRandom(FileStream fs, List<long> enemyAddresses) 
+        => RandomEnemy.RandomEnemyModel(fs, enemyAddresses);
 }

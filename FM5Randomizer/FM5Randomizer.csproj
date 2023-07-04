@@ -5,7 +5,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageIcon>front_mission_5_icon.jpg</PackageIcon>
+    <ApplicationIcon>front_mission_5_icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="front_mission_5_icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FM5Randomizer.GameMethods.cs\FM5Randomizer.GameMethods.csproj" />
