@@ -100,7 +100,7 @@ This will randomize pilot items if the backpack type of item.
 <!-- Downloading -->
 ## How to download the Randomizer
 
-Click on releases page in github, then go down to assets and choose one of two Target runtime [win-x64 or win-x86 -> x32 bit] extract the content and run the randomizer.
+Click on releases page in github or click [Here](https://github.com/KhaleedSA/FM5RandomizerApp/releases/tag/v1.0.0-FM5), then go down to assets and choose one of two Target runtime [win-x64 or win-x86 -> x32 bit] extract the content and run the randomizer.
 The game should be in the same [FM5RandomizerApp] path.
 
 ### Requirements
