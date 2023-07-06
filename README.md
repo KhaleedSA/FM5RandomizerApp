@@ -26,14 +26,14 @@ The xml user settings are:
 
 ### [Enable_HangarPatch]
 
-This setting will enable all Wenzar parts at lvl 1.
+This setting will enable all Wanzer parts at lvl 1.
 There is a file comes with the Randomizer app, Named [004B7670 shopFM5a], This file is required
 
 Credit to [FAN TRANSLATION PROJECT] for their Awesome translation.
 
 ### [Explode_OnKill]
 
-This setting will make wenzar expload on kill, there are 2 type of explotion, low and high.
+This setting will make Wanzer expload on kill, there are 2 type of explotion, low and high.
 Low explosion deal 650 damage in 2 square.
 High explosion deal 2700 damage in 2 square.
 
@@ -46,7 +46,7 @@ This setting will randomize Health value of parts, from 1% up to 100%, where 1% 
 
 ### [Randomize_UnitModel]
 
-This setting will randomize wenzar model in the current stage that you're in.
+This setting will randomize Wanzer model in the current stage that you're in.
 
 Why ?
 That's because of the limitation of the game files, some models required a large amount of datas array in the file,
@@ -58,14 +58,14 @@ Exactly same as randomizing models.
 
 ### [Randomize_BackPack]
 
-This setting will randomize Wenzar backpack, [Turbo, item, repair, EMP].
+This setting will randomize Wanzer backpack, [Turbo, item, repair, EMP].
 And even boss unit can have as well.
 
 ### [Randomize_Weapons]
 
-This setting will randomize Wenzar weapons.
+This setting will randomize Wanzer weapons.
 There is an issue in the weapon textures.
-For example: if the wenzar have sniper weapon, and the randomizer set the weapon at shotgun weapon, 
+For example: if the Wanzer have sniper weapon, and the randomizer set the weapon at shotgun weapon, 
 the new weapon will work fine but the model of the weapon will be same as old model which is sniper.
 
 Why ?
@@ -73,12 +73,12 @@ Same as unit models, there is a limitation of files datas.
 
 ### [Randomize_EquipmentsLvl]
 
-This setting will randomize weapon and Wenzar parts along with backpack levels , from 1 to 12.
+This setting will randomize weapon and Wanzer parts along with backpack levels , from 1 to 12.
 Be aware, this may be very difficult in early playthrough.
 
 ### [Randomize_BodyPart]
 
-This Will randomize Wenzar parts stats, Such as Defence health value avoiding and much more, but can't randomize the textures.
+This Will randomize Wanzer parts stats, Such as Defence health value avoiding and much more, but can't randomize the textures.
 
 Why ?
 Because of the limitation on files data.
