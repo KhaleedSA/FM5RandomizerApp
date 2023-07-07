@@ -2,6 +2,7 @@
 using FM5Randomizer.GameEnum;
 using FM5Randomizer.GameMethods;
 using FM5Randomizer.GameProperties;
+using static FM5Randomizer.GameProperties.MyDataTable;
 using FM5Randomizer.RandomizerSetting;
 
 string? path = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.iso").FirstOrDefault();
@@ -24,14 +25,14 @@ using (FileStream fs = new(path, FileMode.Open, FileAccess.ReadWrite))
 
     UserSetting.ReadWriteSetting(Directory.GetCurrentDirectory());
 
-    HangerPatch.EnableHangerPatch(fs, SettingProperties.Enable_HangarPatch);
+    HangarPatch.EnableHangarPatch(fs, SettingProperties.Enable_HangarPatch);
 
     Array addresses = Enum.GetValues(typeof(Stage.StageAddress));
 
     foreach (long address in addresses)
     {
         MyDataTable.ReadStageAddress = address;
-        MyRandomize.GameRandom(fs, GetObjectValue.GetListOfAddresses(fs, address, MyDataTable.ModelScriptSize, MyDataTable.ModelEntitySize));
+        MyRandomize.GameRandom(fs, GetObjectValue.GetListOfAddresses(fs, address, ObjectSize.GetSize(ObjectSize.Model_Script), ObjectSize.GetSize(ObjectSize.Model_Entity)));
     }
 
     Console.WriteLine("All done...");

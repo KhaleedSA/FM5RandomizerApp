@@ -358,13 +358,6 @@ public class WeaponAndItemID
             TN0x3C = 0x3C,
             TN0x3E = 0x3E
         }
-
-        //public enum Explosive_Container : byte
-        //{
-        //    None = 0,
-        //    EC0x3B = 0x3B,      // Low-650 Damge
-        //    EC0x44 = 0x44       // High-2700 Damage
-        //}
     }
 }
 

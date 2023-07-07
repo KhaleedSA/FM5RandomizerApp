@@ -7,8 +7,21 @@ public class GetObjectValue
 {
     public static readonly List<byte> _weaponItemsID = new();
 
+    /// <summary>
+    /// Get Random model ID
+    /// </summary>
+    /// <param name="ModelsID"> List of Models ID's</param>
+    /// <returns>Random model id</returns>
     public static byte RandomModelID(List<byte> ModelsID) => ModelsID[(byte)MyDataTable.Rnd.Next(ModelsID.Count)];
 
+    /// <summary>
+    /// Get List Enemies Addresses from all stages.
+    /// </summary>
+    /// <param name="fs">File destination to read and write from it</param>
+    /// <param name="currentAddress">The First address for the stage</param>
+    /// <param name="scriptSize">script size to calculate the size of the scipt</param>
+    /// <param name="entitySize">entity size of the enemy</param>
+    /// <returns>List of enemies addresses</returns>
     public static List<long> GetListOfAddresses(FileStream fs, long currentAddress, int scriptSize, int entitySize)
     {
         List<long> addressesList = new();
@@ -21,6 +34,11 @@ public class GetObjectValue
         return addressesList;
     }
 
+    /// <summary>
+    /// Get Random Wanzer Body parts ID
+    /// </summary>
+    /// <typeparam name="T">T is the Enum parts ID's</typeparam>
+    /// <returns>Random value of the given 'T' </returns>
     public static T RandomBodyID<T>()
     {
         List<T> values = new();
@@ -30,6 +48,10 @@ public class GetObjectValue
         return values[MyDataTable.Rnd.Next(values.Count)];
     }
 
+    /// <summary>
+    /// Get Random BackPack ID
+    /// </summary>
+    /// <returns>Random BackPack id</returns>
     public static byte BackPack()
     {
         _weaponItemsID.Clear();
@@ -38,6 +60,10 @@ public class GetObjectValue
         return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
     }
 
+    /// <summary>
+    /// Get Random Shoulder Weapon ID
+    /// </summary>
+    /// <returns>Random Shoulder Weapon id</returns>
     public static byte Launcher_Weapon()
     {
         _weaponItemsID.Clear();
@@ -48,6 +74,10 @@ public class GetObjectValue
         return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
     }
 
+    /// <summary>
+    /// Get Random Fire arm Weapon ID
+    /// </summary>
+    /// <returns>Random Fire arm Weapon id</returns>
     public static byte FireArm_Weapon()
     {
         _weaponItemsID.Clear();
@@ -61,6 +91,10 @@ public class GetObjectValue
         return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
     }
 
+    /// <summary>
+    /// Get Random Item ID
+    /// </summary>
+    /// <returns>Random Item id</returns>
     public static byte Repair_Ammo()
     {
         _weaponItemsID.Clear();
@@ -69,7 +103,11 @@ public class GetObjectValue
 
         return _weaponItemsID[MyDataTable.Rnd.Next(_weaponItemsID.Count)];
     }
-    
+
+    /// <summary>
+    /// Get Random Close Combat Weapon ID
+    /// </summary>
+    /// <returns>Random Close Combat Weapon id</returns>
     public static byte CloseCombat_Weapon()
     {
         _weaponItemsID.Clear();

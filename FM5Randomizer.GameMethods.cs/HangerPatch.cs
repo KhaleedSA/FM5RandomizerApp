@@ -1,38 +1,41 @@
-﻿using FM5Randomizer.GameProperties;
+﻿using static FM5Randomizer.GameProperties.MyDataTable;
 
 namespace FM5Randomizer.GameMethods;
 
-public class HangerPatch
+public class HangarPatch
 {
-    public static void EnableHangerPatch(FileStream fs, bool enable)
+    /// <summary>
+    /// Enable Hangar patch by reading the data from the file and writing the new Hangar to the file, optionally.
+    /// </summary>
+    /// <param name="fs">The file destination to read and write from it</param>
+    /// <param name="enable">To check if the user setting is enabled or disabled</param>
+    public static void EnableHangarPatch(FileStream fs, bool enable)
     {
-        ReadHangerPatch(enable);
-        fs.Position = MyDataTable.HangerPatch.HangerOffset_EXE;
+        Span<byte> buffer = new byte[HangarPatchInfo.ReadWritePatch.Length];
+        ReadHangarPatch(enable, buffer);
 
-        fs.Write(MyDataTable.HangerPatch.ReadWritePatch, 0, MyDataTable.HangerPatch.ReadWritePatch.Length);
+        fs.Position = HangarPatchInfo.HangarOffset_EXE;
+        fs.Write(buffer.ToArray(), 0, buffer.Length);
     }
 
-    private static void ReadHangerPatch(bool enable)
+    /// <summary>
+    /// This will read the data from Hangar patch file, the default Hangar and the modified Hangar.
+    /// </summary>
+    /// <param name="enable">To check if the user setting is enabled or disabled</param>
+    /// <param name="buffer">To read and write Hangar patch data</param>
+    private static void ReadHangarPatch(bool enable, Span<byte> buffer)
     {
-        using(FileStream fs = new(MyDataTable.HangerPatch.FilePath, FileMode.Open, FileAccess.Read))
+        using (FileStream fs = new(HangarPatchInfo.FilePath, FileMode.Open, FileAccess.Read))
         {
             if (enable)
             {
-                Array.Clear(MyDataTable.HangerPatch.ReadWritePatch);
-                fs.Position = MyDataTable.HangerPatch.NewHangerOffset_File;
-                fs.Read(MyDataTable.HangerPatch.ReadWritePatch, 0, MyDataTable.HangerPatch.ReadWritePatch.Length);
-                fs.Close();
-                _ = MyDataTable.HangerPatch.ReadWritePatch;
+                fs.Position = HangarPatchInfo.NewHangarOffset_File;
+                fs.Read(buffer.ToArray(), 0, buffer.Length);
                 return;
             }
 
-            Array.Clear(MyDataTable.HangerPatch.ReadWritePatch);
-            fs.Position = MyDataTable.HangerPatch.OldHangerOffset_File;
-            fs.Read(MyDataTable.HangerPatch.ReadWritePatch, 0, MyDataTable.HangerPatch.ReadWritePatch.Length);
-            fs.Close();
-            _ = MyDataTable.HangerPatch.ReadWritePatch;
-
-            fs.Close ();
+            fs.Position = HangarPatchInfo.OldHangarOffset_File;
+            fs.Read(buffer.ToArray(), 0, buffer.Length);
         }
     }
 }

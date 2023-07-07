@@ -1,5 +1,6 @@
 ﻿using FM5Randomizer.GameEnum;
 using FM5Randomizer.GameProperties;
+using static FM5Randomizer.GameProperties.MyDataTable;
 using FM5Randomizer.RandomizerSetting;
 
 namespace FM5Randomizer.GameMethods;
@@ -18,9 +19,9 @@ public class RandomEnemy
         {
             MyDataTable.EnemyId++;
 
-            fs.Read(MyDataTable.ReadWriteModel, 0, MyDataTable.ReadWriteModel.Length);
-            var enemyName = MyDataTable.ReadWriteModel.Take(24).ToArray();
-            var enemyType = MyDataTable.ReadWriteModel.Skip(64).Take(2).ToArray();
+            fs.Read(Wanzer.Model(), 0, Wanzer.Model().Length);
+            var enemyName = Wanzer.Model().Take(24).ToArray();
+            var enemyType = Wanzer.Model().Skip(64).Take(2).ToArray();
 
             if (!GetUnitValue.IsEmptyString(enemyName))
             {
@@ -39,14 +40,14 @@ public class RandomEnemy
                     RandomBackPack(SettingProperties.Randomize_BackPack);
                     
                     fs.Seek(-128, SeekOrigin.Current);
-                    fs.Write(MyDataTable.ReadWriteModel, 0, MyDataTable.ReadWriteModel.Length);
+                    fs.Write(Wanzer.Model(), 0, Wanzer.Model().Length);
                 }
             }
         }
         
-        var startingAddress = fs.Position = enemyAddresses.FirstOrDefault() + MyDataTable.JumpToStats;
+        var startingAddress = fs.Position = enemyAddresses.FirstOrDefault() + ObjectSize.GetSize(ObjectSize.Seek_Stats);
 
-        var entityAddresses = GetObjectValue.GetListOfAddresses(fs, startingAddress, MyDataTable.StatsScriptSize, MyDataTable.StatsEntitySize);
+        var entityAddresses = GetObjectValue.GetListOfAddresses(fs, startingAddress, ObjectSize.GetSize(ObjectSize.Stats_Script), ObjectSize.GetSize(ObjectSize.Stats_Entity));
 
         for (int i = 0; i < entityAddresses.Count; i++)
             RandomStats.RandomEnemyStats(fs);
@@ -60,10 +61,10 @@ public class RandomEnemy
         if (!enable)
             return;
 
-        MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHeadID>(), 68);
-        MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 70);
-        MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 72);
-        MyDataTable.ReadWriteModel.SetValue(GetObjectValue.RandomBodyID<PartsID.LegsID>(), 74);
+        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHeadID>(), 68);
+        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 70);
+        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 72);
+        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.LegsID>(), 74);
     }
 
     private static void RandomBackPack(bool enable)
@@ -71,7 +72,7 @@ public class RandomEnemy
         if (!enable)
             return;
 
-        MyDataTable.ReadWriteModel.SetValue(GetObjectValue.BackPack(), 76);
+        Wanzer.Model().SetValue(GetObjectValue.BackPack(), 76);
     }
 
     private static void RandomWeapon(bool enable)
@@ -79,10 +80,10 @@ public class RandomEnemy
         if (!enable)
             return;
 
-        byte leftArm = MyDataTable.ReadWriteModel.ElementAt(78);
-        byte rightArm = MyDataTable.ReadWriteModel.ElementAt(80);
-        byte leftShoulder = MyDataTable.ReadWriteModel.ElementAt(82);
-        byte rightShoulder = MyDataTable.ReadWriteModel.ElementAt(84);
+        byte leftArm = Wanzer.Model().ElementAt(78);
+        byte rightArm = Wanzer.Model().ElementAt(80);
+        byte leftShoulder = Wanzer.Model().ElementAt(82);
+        byte rightShoulder = Wanzer.Model().ElementAt(84);
 
 
         SetWeaponLeftArm(leftArm);
@@ -95,23 +96,23 @@ public class RandomEnemy
         // FireArm left Weapon
         if (leftArm >= 0x01 && leftArm <= 0x42 || leftArm >= 0x5B && leftArm <= 0x7E || leftArm == 0x97)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.FireArm_Weapon(), 78);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
+            Wanzer.Model().SetValue(GetObjectValue.FireArm_Weapon(), 78);
+            Wanzer.Model().SetValue((byte)0, 79);
             return;
         }
 
         // CloseCombat left Weapon
         if (leftArm >= 0x43 && leftArm <= 0x5A || leftArm >= 0x7F && leftArm <= 0x96)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.CloseCombat_Weapon(), 78);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 79);
+            Wanzer.Model().SetValue(GetObjectValue.CloseCombat_Weapon(), 78);
+            Wanzer.Model().SetValue((byte)0, 79);
             return;
         }
     }
 
     private static void SetWeaponRightArm(byte rightArm)
     {
-        byte? checkValue = (byte?)MyDataTable.ReadWriteModel.GetValue(81);
+        byte? checkValue = (byte?)Wanzer.Model().GetValue(81);
 
         // exit if unit already has an explotion set.
         if (_Explotion.Contains(rightArm) && checkValue == 1)
@@ -124,28 +125,28 @@ public class RandomEnemy
 
             if (explotion == 0)
             {
-                MyDataTable.ReadWriteModel.SetValue(explotion, 80);
-                MyDataTable.ReadWriteModel.SetValue((byte)0, 81);
+                Wanzer.Model().SetValue(explotion, 80);
+                Wanzer.Model().SetValue((byte)0, 81);
                 return;
             }
 
-            MyDataTable.ReadWriteModel.SetValue(explotion, 80);
-            MyDataTable.ReadWriteModel.SetValue((byte)1, 81);
+            Wanzer.Model().SetValue(explotion, 80);
+            Wanzer.Model().SetValue((byte)1, 81);
             return;
         }
 
         // FireArm right Weapon
         if (rightArm >= 0x01 && rightArm <= 0x42 || rightArm >= 0x5B && rightArm <= 0x7E || rightArm == 0x97)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.FireArm_Weapon(), 80);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 81);
+            Wanzer.Model().SetValue(GetObjectValue.FireArm_Weapon(), 80);
+            Wanzer.Model().SetValue((byte)0, 81);
         }
 
         // CloseCombat right Weapon
         else if (rightArm >= 0x43 && rightArm <= 0x5A || rightArm >= 0x7F && rightArm <= 0x96)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.CloseCombat_Weapon(), 80);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 81);
+            Wanzer.Model().SetValue(GetObjectValue.CloseCombat_Weapon(), 80);
+            Wanzer.Model().SetValue((byte)0, 81);
         }
     }
 
@@ -154,15 +155,15 @@ public class RandomEnemy
         // Launcher left shoulder weapon
         if (leftShoulder >= 0x01 && leftShoulder <= 0x2A)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Launcher_Weapon(), 82);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 83);
+            MyDataTable.Wanzer.Model().SetValue(GetObjectValue.Launcher_Weapon(), 82);
+            MyDataTable.Wanzer.Model().SetValue((byte)0, 83);
         }
 
         // Launcher right shoulder weapon
         else if (rightShoulder >= 0x01 && rightShoulder <= 0x2A)
         {
-            MyDataTable.ReadWriteModel.SetValue(GetObjectValue.Launcher_Weapon(), 84);
-            MyDataTable.ReadWriteModel.SetValue((byte)0, 85);
+            MyDataTable.Wanzer.Model().SetValue(GetObjectValue.Launcher_Weapon(), 84);
+            MyDataTable.Wanzer.Model().SetValue((byte)0, 85);
         }
     }
 }
