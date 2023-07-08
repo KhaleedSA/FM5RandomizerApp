@@ -1,5 +1,4 @@
-﻿
-namespace FM5Randomizer.GameProperties;
+﻿namespace FM5Randomizer.GameProperties;
 
 public class MyDataTable
 {
@@ -50,18 +49,24 @@ public class MyDataTable
         public ref struct GetInfo
         {
 
-            public ReadOnlySpan<byte> GameNameByte = new (new byte[14] { 0x46, 0x52, 0x4F, 0x4E, 0x54, 0x5F, 0x4D, 0x49, 0x53, 0x53, 0x49, 0x4F, 0x4E, 0x35 });
-            public ReadOnlySpan<byte> PublisherByte = new (new byte[11] { 0x53, 0x51, 0x55, 0x41, 0x52, 0x45, 0x20, 0x45, 0x4E, 0x49, 0x58 });
-            public ReadOnlySpan<byte> GameCreationDateByte_1 = new (new byte[9] { 0x32, 0x30, 0x30, 0x35, 0x31, 0x31, 0x32, 0x37, 0x32 });
-            public ReadOnlySpan<byte> GameCreationDateByte_2 = new (new byte[9] { 0x32, 0x30, 0x30, 0x36, 0x30, 0x32, 0x31, 0x36, 0x32 });
+            /// <summary>
+            /// GameName.Slice(0,14), GamePublisher.Slice(14,11), GameCreation_1.Slice(25,9), GameCreation_2.Slice(34,9)
+            /// </summary>
+            public ReadOnlySpan<byte> GameInfoData = new(new byte[43]
+            {
+                0x46, 0x52, 0x4F, 0x4E, 0x54, 0x5F, 0x4D, 0x49, 0x53, 0x53, 0x49, 0x4F, 0x4E, 0x35,   // game name byte. Slice(0,14)
+                0x53, 0x51, 0x55, 0x41, 0x52, 0x45, 0x20, 0x45, 0x4E, 0x49, 0x58,   // game Publisher Byte. Slice(14,11)
+                0x32, 0x30, 0x30, 0x35, 0x31, 0x31, 0x32, 0x37, 0x32,   // game GameCreation Date Byte. Slice(25,9)
+                0x32, 0x30, 0x30, 0x36, 0x30, 0x32, 0x31, 0x36, 0x32    // game GameCreation Date Byte. Slice(34,9)
+            });
 
             public GetInfo() { }
         }
 
-        public static List<long> InfoLocations = new() { GameName_ExeLocation, CreationDate_ExeLocation, Publisher_ExeLocation };
+        public static readonly List<long> InfoLocations = new() { GameName_ExeLocation, Publisher_ExeLocation, CreationDate_ExeLocation };
         private const long GameName_ExeLocation = 0x8028;
-        private const long CreationDate_ExeLocation = 0x832D;
         private const long Publisher_ExeLocation = 0x813E;
+        private const long CreationDate_ExeLocation = 0x832D;
     }
 
     public class HangarPatchInfo

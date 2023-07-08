@@ -11,11 +11,12 @@ public class HangarPatch
     /// <param name="enable">To check if the user setting is enabled or disabled</param>
     public static void EnableHangarPatch(FileStream fs, bool enable)
     {
-        Span<byte> buffer = new byte[HangarPatchInfo.ReadWritePatch.Length];
+        Span<byte> buffer = new(HangarPatchInfo.ReadWritePatch);
+
         ReadHangarPatch(enable, buffer);
 
         fs.Position = HangarPatchInfo.HangarOffset_EXE;
-        fs.Write(buffer.ToArray(), 0, buffer.Length);
+        fs.Write(buffer);
     }
 
     /// <summary>
@@ -30,12 +31,12 @@ public class HangarPatch
             if (enable)
             {
                 fs.Position = HangarPatchInfo.NewHangarOffset_File;
-                fs.Read(buffer.ToArray(), 0, buffer.Length);
+                fs.Read(buffer);
                 return;
             }
 
             fs.Position = HangarPatchInfo.OldHangarOffset_File;
-            fs.Read(buffer.ToArray(), 0, buffer.Length);
+            fs.Read(buffer);
         }
     }
 }
