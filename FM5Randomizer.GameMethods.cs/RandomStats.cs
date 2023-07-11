@@ -1,11 +1,13 @@
 ﻿using FM5Randomizer.GameProperties;
 using static FM5Randomizer.GameProperties.MyDataTable;
 using FM5Randomizer.RandomizerSetting;
+using FM5Randomizer.GameEnum;
 
 namespace FM5Randomizer.GameMethods;
 
 public class RandomStats
 {
+    private static readonly List<byte> SelectionPilotID = new(5) { /*0x1B,*/ 0x1C, 0x1D, 0x1E, 0x1F, 0x20 };
     private static byte[] ReadOldCoords = new byte[2];
     private static byte[] ReadNewCoords = new byte[2];
     private const byte MaxPilotLvl = 50;
@@ -42,16 +44,18 @@ public class RandomStats
             Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 10);
             Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 12);
             Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 14);
-        } 
-        
-        // Randomize Wanzer Health Value
-        //if (!SettingProperties.Randomize_HealthValue)
-        //{
-        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 8);
-        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 10);
-        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 12);
-        //    MyDataTable.Wanzer.Stats().SetValue((byte)100, 14);
-        //}
+        }
+
+        // Randomize Selection pilot, if player pilot then randomize it and exit the method.
+        if (SettingProperties.Randomize_SelectionPilot && SelectionPilotID.Contains((byte)Wanzer.Stats().GetValue(1)))
+        {
+            byte value = (byte)MyDataTable.Rnd.Next(Enum.GetValues(typeof(WanzerSpawn.SelctionPilot_Status)).Length);
+            if (value == 0 || value == 2)
+            {
+                Wanzer.Stats().SetValue(value, 0);
+            }
+            return;
+        }
 
         // Randomize pilot model
         if (SettingProperties.Randomize_UnitModel || SettingProperties.Randomize_BossModel)

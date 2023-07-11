@@ -17,7 +17,7 @@ public class MyDataTable
         public const string Seek_Stats = nameof(Seek_Stats);
 
         private static readonly Dictionary<string, int> _size = new() 
-        {{Model_Script, 3328}, {Model_Entity, 128}, {Stats_Script, 14848}, {Stats_Entity, 256}, {Seek_Stats, 5632}};
+        {{Model_Script, 3328}, {Model_Entity, 128}, {/*Stats_Script, 14848*/Stats_Script, 16128}, {Stats_Entity, 256}, {/*Seek_Stats, 5632*/Seek_Stats, 4352}};
 
         public static int GetSize(string kName) => _size[kName];
     }

@@ -20,8 +20,8 @@ public class RandomEnemy
             MyDataTable.EnemyId++;
 
             fs.Read(Wanzer.Model(), 0, Wanzer.Model().Length);
-            var enemyName = Wanzer.Model().Take(24).ToArray();
-            var enemyType = Wanzer.Model().Skip(64).Take(2).ToArray();
+            byte[] enemyName = Wanzer.Model().Take(24).ToArray();
+            byte[] enemyType = Wanzer.Model().Skip(64).Take(2).ToArray();
 
             if (!GetUnitValue.IsEmptyString(enemyName))
             {

@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using static FM5Randomizer.GameEnum.MechSpawn;
+using static FM5Randomizer.GameEnum.WanzerSpawn;
 
 namespace FM5Randomizer.GameMethods;
 
@@ -16,11 +16,11 @@ public class GetUnitValue
     {
         return BitConverter.ToInt16(checkValue, 0) switch
         {
-            (short)SpawnAreaSize.None => false,
-            (short)SpawnAreaSize.Boss_00 => withBosses ? true : false,
-            (short)SpawnAreaSize.Boss_01 => withBosses ? true : false,
-            (short)SpawnAreaSize.Landing_Craft => false,
-            (short)SpawnAreaSize.MapUnit => false,
+            (short)SpawnType.None => false,
+            (short)SpawnType.Boss_00 => withBosses ? true : false,
+            (short)SpawnType.Boss_01 => withBosses ? true : false,
+            (short)SpawnType.Landing_Craft => false,
+            (short)SpawnType.MapUnit => false,
             _ => true,
         };
     }

@@ -1,8 +1,8 @@
 ﻿namespace FM5Randomizer.GameEnum;
 
-public class MechSpawn
+public class WanzerSpawn
 {
-    public enum SpawnAreaSize : short
+    public enum SpawnType : short
     {
         None = 0,
         Normal = 256,           // Normal Wanzer
@@ -12,5 +12,12 @@ public class MechSpawn
         Boss_01 = 1792,         // Boss Wanzer
         Landing_Craft = 2304,   // Map object
         MapUnit = 2048          // Car, Cannon, Grenad, Silo, Hanger
+    }
+
+    public enum SelctionPilot_Status : byte
+    {
+        Dead, 
+        Event,
+        Alive
     }
 }
