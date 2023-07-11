@@ -21,6 +21,7 @@ The xml user settings are:
 * 10- Randomize_PilotLvl
 * 11- Randomize_Skills
 * 12- Randomize_Items
+* 13- Randomize_SelctionPilot
 
 
 
@@ -73,12 +74,12 @@ Same as unit models, there is a limitation of files datas.
 
 ### [Randomize_EquipmentsLvl]
 
-This setting will randomize weapon and Wanzer parts along with backpack levels , from 1 to 12.
+This setting will randomize weapon and Wanzer parts along with backpack levels, from 1 to 12.
 Be aware, this may be very difficult in early playthrough.
 
 ### [Randomize_BodyPart]
 
-This Will randomize Wanzer parts stats, Such as Defence health value avoiding and much more, but can't randomize the textures.
+This Will randomize Wanzer parts stats, Such as "Defence, health value, avoiding, and much more", but it can't randomize the textures.
 
 Why ?
 Because of the limitation on files data.
@@ -96,6 +97,10 @@ Luckily the game will adjust the skills based on pilot type.
 
 This will randomize pilot items if the backpack type of item.
 
+### [Randomize_SelctionPilot]
+
+This will randomize the number of pilots selection in each stage, instead of alwayse 6 pilots you will have a random numbers from 1 to 6.
+For example if slot number 6 was disabled, then you can't use pilot number 6 in pilot ready room.
 
 <!-- Downloading -->
 ## How to download the Randomizer
@@ -125,7 +130,8 @@ At the first run, the app will extract a file named [RandomizerSetting] this xml
 - [x] Explode_OnKill
 - [] PilotLvl_SamePlayer
 - [] Unit_CanUseBossWeapon
-- [] Randomize_StartUpPilot
+- [x] Randomize_SelctionPilot
+- [] SelctionPilot_FixedNumber
 - [x] Randomize_HealthValue
 - [] Randomize_UnitCoordinate
 - [] Randomize_HealthDisplay
@@ -138,7 +144,9 @@ At the first run, the app will extract a file named [RandomizerSetting] this xml
 - [x] Randomize_BodyPart
 - [x] Randomize_PilotLvl
 - [x] Randomize_Skills
+- [] Skills_FixedNumber
 - [x] Randomize_Items
+- [] Items_FixedNumber
 
 
 <!-- Credit -->
@@ -149,6 +157,6 @@ Credit to [FAN TRANSLATION PROJECT] for the translation patch.
 <!-- CONTACT -->
 ## Contact
 
-[@khaleed681](https://twitter.com/khaleed681)
+Twitter: [@khaleed681](https://twitter.com/khaleed681)
 
-[KhaleedSA](https://github.com/KhaleedSA)
+GitHub: [KhaleedSA](https://github.com/KhaleedSA)
