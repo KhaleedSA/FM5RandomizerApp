@@ -21,10 +21,8 @@ The xml user settings are:
 * 10- Randomize_PilotLvl
 * 11- Randomize_Skills
 * 12- Randomize_Items
-* 13- Randomize_SelctionPilot
-* 14- SelectionPilot_FixedNumber
-* 15- Skills_FixedNumber
-* 16- Items_FixedNumber
+* 13- Skills_FixedNumber
+* 14- Items_FixedNumber
 
 
 
@@ -110,11 +108,11 @@ This will randomize pilot items if the backpack type of item.
 This will randomize only the numbers that given.
 for example: if the Fixed number is 3, it will only Randomize and give the enemy 3 items. [items or ammo].
 
-## [Randomize_SelctionPilot]
+## [Randomize_SelctionPilot] * Temporarily disabled. It cause bug to Wanzer Randomize
 
 This will randomize the number of pilots selection in each stage, Equal to the given number from [SelectionPilot_FixedNumber].
 
-## [SelctionPilot_FixedNumber]
+## [SelctionPilot_FixedNumber] * Temporarily disabled. It cause bug to Wanzer Randomize
 
 This will remove random pilot by the given number.
 For example: if you set the number at 2, it will remove 2 random pilot.
@@ -148,8 +146,8 @@ At the first run, the app will extract a file named [RandomizerSetting] this xml
 - [x] Explode_OnKill
 - [] PilotLvl_SamePlayer
 - [] Unit_CanUseBossWeapon
-- [x] Randomize_SelctionPilot
-- [x] SelctionPilot_FixedNumber
+- [] Randomize_SelctionPilot
+- [] SelctionPilot_FixedNumber
 - [x] Randomize_HealthValue
 - [] Randomize_UnitCoordinate
 - [] Randomize_HealthDisplay

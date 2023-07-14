@@ -41,11 +41,11 @@ public class UserSetting
             // Write XML
             foreach (PropertyInfo info in _propertyInfo)
             {
-                if (info?.Name == nameof(SettingProperties.Randomize_SelectionPilot))
-                {
-                    WriteElement(writer, info, nameof(SettingProperties.SelectionPilot_FixedNumber), 8);
-                    continue;
-                }
+                //if (info?.Name == nameof(SettingProperties.Randomize_SelectionPilot))
+                //{
+                //    WriteElement(writer, info, nameof(SettingProperties.SelectionPilot_FixedNumber), 6);
+                //    continue;
+                //}
 
                 if (info?.Name == nameof(SettingProperties.Randomize_Skills))
                 {
