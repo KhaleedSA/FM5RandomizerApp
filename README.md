@@ -1,5 +1,5 @@
 <!-- ABOUT THE Randomizer -->
-##### About The Randomizer
+# About The Randomizer
 
 A Console Application with an xml user setting where you can choose your difficulty for your Randomizing setting.
 
@@ -28,14 +28,14 @@ The xml user settings are:
 
 
 
-#### [Enable_HangarPatch]
+## [Enable_HangarPatch]
 
 This setting will enable all Wanzer parts at lvl 1.
 There is a file comes with the Randomizer app, Named [004B7670 shopFM5a], This file is required
 
 Credit to [FAN TRANSLATION PROJECT] for their Awesome translation.
 
-#### [Explode_OnKill]
+## [Explode_OnKill]
 
 This setting will make Wanzer expload on kill, there are 2 type of explotion, low and high.
 Low explosion deal 650 damage in 2 square.
@@ -43,12 +43,12 @@ High explosion deal 2700 damage in 2 square.
 
 The setting will randomizer three values, [None, Low and High].
 
-#### [Randomize_HealthValue]
+## [Randomize_HealthValue]
 
 This setting will randomize Health value of parts, from 1% up to 100%, where 1% is the lowest health value.
 
 
-#### [Randomize_UnitModel]
+## [Randomize_UnitModel]
 
 This setting will randomize Wanzer model in the current stage that you're in.
 
@@ -56,16 +56,16 @@ Why ?
 That's because of the limitation of the game files, some models required a large amount of datas array in the file,
 and some stages are very limited with some datas.
 
-#### [Randomize_BossModel]
+## [Randomize_BossModel]
 
 Exactly same as randomizing models.
 
-#### [Randomize_BackPack]
+## [Randomize_BackPack]
 
 This setting will randomize Wanzer backpack, [Turbo, item, repair, EMP].
 And even boss unit can have as well.
 
-#### [Randomize_Weapons]
+## [Randomize_Weapons]
 
 This setting will randomize Wanzer weapons.
 There is an issue in the weapon textures.
@@ -75,58 +75,58 @@ the new weapon will work fine but the model of the weapon will be same as old mo
 Why ?
 Same as unit models, there is a limitation of files datas.
 
-#### [Randomize_EquipmentsLvl]
+## [Randomize_EquipmentsLvl]
 
 This setting will randomize weapon and Wanzer parts along with backpack levels, from 1 to 12.
 Be aware, this may be very difficult in early playthrough.
 
-#### [Randomize_BodyPart]
+## [Randomize_BodyPart]
 
 This Will randomize Wanzer parts stats, Such as "Defence, health value, avoiding, and much more", but it can't randomize the textures.
 
 Why ?
 Because of the limitation on files data.
 
-#### [Randomize_PilotLvl]
+## [Randomize_PilotLvl]
 
 This will randomize pilot level from 1 to 50 , the more pilot level is the more can resist EMP and have higher avoiding chance.
 
-#### [Randomize_Skills]
+## [Randomize_Skills]
 
 This will randomize pilot skills up to 16 skill based on his current skill level.
 Luckily the game will adjust the skills based on pilot type.
 
-#### [Skills_FixedNumber]
+## [Skills_FixedNumber]
 
 This will randomize only the numbers that given.
 for example: if the Fixed number is 3, it will only Randomize and give the enemy 3 Skills, based on his current type.
 
-#### [Randomize_Items]
+## [Randomize_Items]
 
 This will randomize pilot items if the backpack type of item.
 
-#### [Items_FixedNumber]
+## [Items_FixedNumber]
 
 This will randomize only the numbers that given.
 for example: if the Fixed number is 3, it will only Randomize and give the enemy 3 items. [items or ammo].
 
-#### [Randomize_SelctionPilot]
+## [Randomize_SelctionPilot]
 
 This will randomize the number of pilots selection in each stage, Equal to the given number from [SelectionPilot_FixedNumber].
 
-#### [SelctionPilot_FixedNumber]
+## [SelctionPilot_FixedNumber]
 
 This will remove random pilot by the given number.
 For example: if you set the number at 2, it will remove 2 random pilot.
 If number Higher than 6 or lower than 1 it will not remove any pilot.
 
 <!-- Downloading -->
-### How to download the Randomizer
+# How to download the Randomizer
 
 Click on releases page in github or click [Here](https://github.com/KhaleedSA/FM5RandomizerApp/releases/tag/v1.0.0-FM5), then go down to assets and choose one of two Target runtime [win-x64 or win-x86 -> x32 bit] extract the content and run the randomizer.
 The game should be in the same [FM5RandomizerApp] path.
 
-### Requirements
+# Requirements
 
 App is required .net6 sdk, you can download it from official Microsoft Website.
 [official Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
@@ -136,7 +136,7 @@ The file is already with the randomizer, if somehow you needed for the file, you
 [004B7670 shopFM5a](https://github.com/KhaleedSA/FM5RandomizerApp/releases/tag/v1.0.0-FM5).
 
 <!-- Installation -->
-### Installation
+# Installation
 
 Really simple, exctract zip content and run the app, two file are required the [004B7670 shopFM5a] and the [Game iso]
 At the first run, the app will extract a file named [RandomizerSetting] this xml has The settings you need for adjust the randomizing that you want.
