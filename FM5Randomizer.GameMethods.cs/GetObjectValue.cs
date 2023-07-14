@@ -49,6 +49,18 @@ public class GetObjectValue
     }
 
     /// <summary>
+    /// Get Random Wanzer Body parts ID
+    /// </summary>
+    /// <returns>Random value of the given 'PartsID.BodyID' </returns>
+    public static PartsID.BodyID RandomBodyID()
+    {
+        List<PartsID.BodyID> values = new();
+        values.AddRange((IEnumerable<PartsID.BodyID>)Enum.GetValues(typeof(PartsID.BodyID)));
+        
+        return values[MyDataTable.Rnd.Next(values.Count)];
+    }
+
+    /// <summary>
     /// Get Random BackPack ID
     /// </summary>
     /// <returns>Random BackPack id</returns>

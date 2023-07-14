@@ -7,7 +7,7 @@ namespace FM5Randomizer.GameMethods;
 
 public class RandomStats
 {
-    private static readonly List<byte> SelectionPilotID = new(5) { /*0x1B,*/ 0x1C, 0x1D, 0x1E, 0x1F, 0x20 };
+    private static readonly List<byte> SelectionPilotID = new(6) { 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20 };
     private static byte[] ReadOldCoords = new byte[2];
     private static byte[] ReadNewCoords = new byte[2];
     private const byte MaxPilotLvl = 50;
@@ -16,8 +16,16 @@ public class RandomStats
     private const byte MinLvl = 0;
     private const byte MaxHealth = 65;
     private const byte MinHealth = 1;
+    private static bool SkipPilotSelection = false;
+
     public static void RandomEnemyStats(FileStream fs)
     {
+        if (!SkipPilotSelection)
+        {
+            RemoveSelectionPilot();
+            SkipPilotSelection = true;
+        }
+
         fs.Read(Wanzer.Stats(), 0, Wanzer.Stats().Length);
 
         if (!Wanzer.Stats().ElementAt(0).Equals(0) && !MyDataTable.InValidEnemyID.Contains(Wanzer.Stats().ElementAt(1)))
@@ -30,6 +38,16 @@ public class RandomStats
         Array.Clear(Wanzer.Stats(), 0, Wanzer.Stats().Length);
     }
 
+    static void RemoveSelectionPilot()
+    {
+        // Remove random selection pilot by the given number from user setting.
+        if (SettingProperties.SelectionPilot_FixedNumber > 1 && SettingProperties.SelectionPilot_FixedNumber < 6)
+        {
+            for (int i = 0; i < SettingProperties.SelectionPilot_FixedNumber; i++)
+                SelectionPilotID.RemoveAt((byte)MyDataTable.Rnd.Next(SelectionPilotID.Count));
+        }
+    }
+
     private static void WriteNewEnemyStats()
     {
         // Fix potential soft-Lock!!
@@ -37,14 +55,7 @@ public class RandomStats
         Array.Clear(ReadNewCoords);
         FixCoordinate();
 
-        // Randomize Wanzer Health Value
-        if (SettingProperties.Randomize_HealthValue)
-        {
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 8);
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 10);
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 12);
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 14);
-        }
+        RandomizeWanzerHealth();
 
         // Randomize Selection pilot, if player pilot then randomize it and exit the method.
         if (SettingProperties.Randomize_SelectionPilot && SelectionPilotID.Contains((byte)Wanzer.Stats().GetValue(1)))
@@ -65,7 +76,33 @@ public class RandomStats
         if (SettingProperties.Randomize_PilotLvl)
             Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinPilotLvl, MaxPilotLvl), 30);
 
-        // Randomize Pilot Body Weapons Lvl
+
+        RandomizeWanzerEqupmentLvl();
+
+        RandomizePilotSkill();
+
+        RandomizePilotItem();
+    }
+
+    /// <summary>
+    /// Randomize Wanzer Health Value
+    /// </summary>
+    private static void RandomizeWanzerHealth()
+    {
+        if (SettingProperties.Randomize_HealthValue)
+        {
+            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 8);
+            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 10);
+            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 12);
+            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 14);
+        }
+    }
+
+    /// <summary>
+    /// Randomize Pilot Body and Weapons Lvl
+    /// </summary>
+    private static void RandomizeWanzerEqupmentLvl()
+    {
         if (SettingProperties.Randomize_EquipmentsLvl)
         {
             Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinLvl, MaxLvl), 93);
@@ -73,19 +110,47 @@ public class RandomStats
             for (int i = 0; i < 2; i++)
                 Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinLvl, MaxLvl), 96 + i);
         }
+    }
 
-        // Randomize Pilot Skills
+    /// <summary>
+    /// Randomize Pilot Skills
+    /// </summary>
+    private static void RandomizePilotSkill()
+    {
         if (SettingProperties.Randomize_Skills)
         {
-            for (int i = 0; i < 16; i++)
-                Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(0, 100), 192 + i);
-        }
+            if (SettingProperties.Skills_FixedNumber > 1 && SettingProperties.Skills_FixedNumber < 16)
+            {
+                for (int i = 0; i < SettingProperties.Skills_FixedNumber; i++)
+                    Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(0, 100), 192 + i);
+            }
 
-        // Randomize Pilot Items
+            else
+            {
+                for (int i = 0; i < 16; i++)
+                    Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(0, 100), 192 + i);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Randomize Pilot Items
+    /// </summary>
+    private static void RandomizePilotItem()
+    {
         if (SettingProperties.Randomize_Items)
         {
-            for (int i = 0; i < 8; i++)
-                Wanzer.Stats().SetValue(GetObjectValue.Repair_Ammo(), 208 + i);
+            if (SettingProperties.Items_FixedNumber > 1 && SettingProperties.Items_FixedNumber < 8)
+            {
+                for (int i = 0; i < SettingProperties.Items_FixedNumber; i++)
+                    Wanzer.Stats().SetValue(GetObjectValue.Repair_Ammo(), 208 + i);
+            }
+
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                    Wanzer.Stats().SetValue(GetObjectValue.Repair_Ammo(), 208 + i);
+            }
         }
     }
 

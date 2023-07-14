@@ -72,11 +72,11 @@ public class PartsID
         Part0x42 = 0x42,        //"T-3 Terror Wolf"
     }
 
-    public enum HandsID : byte
+    public enum SpecialHandsID : byte
     {
         Part0x01 = 0x01,        //"Zenith Zenith R2(Arms)" 
-        //Part0x46 = 0x46,        //"Dasler Claw 0(Arms-Max Rank 8)"
-        //Part0x47 = 0x47,        //"Dasler Claw (Arms-Max Rank 12)"
+        Part0x46 = 0x46,        //"Dasler Claw 0(Arms-Max Rank 8)"
+        Part0x47 = 0x47,        //"Dasler Claw (Arms-Max Rank 12)"
     }
 
     public enum LegsID : byte

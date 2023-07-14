@@ -61,9 +61,22 @@ public class RandomEnemy
         if (!enable)
             return;
 
+        // Randomize Head part
         Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHeadID>(), 68);
-        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 70);
-        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.HandsID>(), 72);
+        
+        // Randomize left hand part
+        if (Wanzer.Model().GetValue(70).Equals(0))
+            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHandsID>(), 70);
+        else
+            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID(), 70);
+
+        // Randomize right hand part
+        if (Wanzer.Model().GetValue(72).Equals(0))
+            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHandsID>(), 72);
+        else
+            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID(), 72);
+
+        // Randomize leg part
         Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.LegsID>(), 74);
     }
 

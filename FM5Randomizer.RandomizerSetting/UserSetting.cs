@@ -7,21 +7,21 @@ namespace FM5Randomizer.RandomizerSetting;
 public class UserSetting
 {
     private static readonly PropertyInfo[] _propertyInfo = typeof(SettingProperties).GetProperties();
+
     public static void ReadWriteSetting(string savePath)
     {
         if (File.Exists($@"{savePath}\{nameof(RandomizerSetting)}.xml"))
         {
             XElement xelement = XElement.Load($@"{savePath}\{nameof(RandomizerSetting)}.xml");
             IEnumerable<XElement> elementInfo = xelement.Elements();
+            int counter = 0;
 
             // Read XML
-            for (int i = 0; i < elementInfo.Count(); i++)
+            foreach (XAttribute attribute in elementInfo.Attributes())
             {
-                if (elementInfo.ElementAt(i).Name.LocalName == _propertyInfo[i].Name)
-                {
-                    var result = GetElementValue(elementInfo.ElementAt(i));
-                    _propertyInfo.ElementAt(i).SetValue(null, result);
-                }
+                var result = GetElementValue(attribute);
+                _propertyInfo.ElementAt(counter).SetValue(null, result);
+                counter++;
             }
             return;
         }
@@ -41,8 +41,26 @@ public class UserSetting
             // Write XML
             foreach (PropertyInfo info in _propertyInfo)
             {
-                writer.WriteStartElement(info.Name, $"{info?.GetValue(null, null).ToString()?.ToLower()}");
-                writer.WriteEndElement();
+                if (info?.Name == nameof(SettingProperties.Randomize_SelectionPilot))
+                {
+                    WriteElement(writer, info, nameof(SettingProperties.SelectionPilot_FixedNumber), 8);
+                    continue;
+                }
+
+                if (info?.Name == nameof(SettingProperties.Randomize_Skills))
+                {
+                    WriteElement(writer, info, nameof(SettingProperties.Skills_FixedNumber), 16);
+                    continue;
+                }
+
+                if (info?.Name == nameof(SettingProperties.Randomize_Items))
+                {
+                    WriteElement(writer, info, nameof(SettingProperties.Items_FixedNumber), 8);
+                    continue;
+                }
+
+                if (info?.PropertyType != typeof(byte))
+                    WriteElement(writer, info);
             }
 
             writer.WriteEndElement();
@@ -52,11 +70,26 @@ public class UserSetting
         Console.WriteLine($"File [{nameof(RandomizerSetting)}.xml] has been Created");
     }
 
-    private static bool GetElementValue(XElement element)
+    private static void WriteElement(XmlWriter writer, PropertyInfo? info, string? settingProperties = null, byte value = 0)
+    {
+        writer.WriteStartElement(info.Name);
+        writer.WriteAttributeString("Boolean", $"{info?.GetValue(null, null).ToString()?.ToLower()}");
+
+        if (settingProperties != null && value != 0)
+            writer.WriteAttributeString(settingProperties, $"{value}");
+        writer.WriteEndElement();
+    }
+
+    private static object GetElementValue(XAttribute attribute)
     {
         try
         {
-            return XmlConvert.ToBoolean(element.Attribute("xmlns").Value);
+            string xName = attribute.Name.LocalName;
+
+            if (xName == "Boolean")
+                return Convert.ToBoolean(attribute.Value);
+            else
+                return Convert.ToByte(attribute.Value);
         }
         catch (Exception ex)
         {
