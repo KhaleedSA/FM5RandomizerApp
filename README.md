@@ -4,7 +4,7 @@
 A Console Application with an xml user setting where you can choose your difficulty for your Randomizing setting.
 
 There are some rules to follow to avoid Application errors:
-* 1- You can only change values of [userSetting.xml] by using [false or true "lowercase" || 0 or 1].
+* 1- You can only change values of [userSetting.xml] by typing [false or true "lowercase" or "uppercase"] and must be inside the quotation mark, for example: "true" or "True" | or for fixed numbers "5".
 * 2- it's better to completely close the game before using Randomizer.
 * 3- Unfortunately every time you want to change some value in the [userSetting.xml] you need a clean Copy of game file.
 
