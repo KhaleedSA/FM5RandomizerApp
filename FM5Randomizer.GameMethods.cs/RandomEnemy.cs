@@ -10,8 +10,10 @@ public class RandomEnemy
     private const byte none_Explotion = 0;
     private const byte low_Explotion = 0x3B;
     private const byte high_Explotion = 0x44;
+
     private static readonly List<short> _Explotion = new() {none_Explotion, low_Explotion, high_Explotion };
-    public static void RandomEnemyModel(FileStream fs, List<long> enemyAddresses)
+
+    public static void RandomWanzerModel(FileStream fs, List<long> enemyAddresses)
     {
         MyDataTable.EnemyId = 0;
 
@@ -19,28 +21,28 @@ public class RandomEnemy
         {
             MyDataTable.EnemyId++;
 
-            fs.Read(Wanzer.Model(), 0, Wanzer.Model().Length);
-            byte[] enemyName = Wanzer.Model().Take(24).ToArray();
-            byte[] enemyType = Wanzer.Model().Skip(64).Take(2).ToArray();
+            fs.Seek(enemyAddresses[i], SeekOrigin.Begin);
 
-            if (!GetUnitValue.IsEmptyString(enemyName))
+            fs.Read(Wanzer.Model());
+
+            if (!GetUnitValue.IsEmptyNameModel(Wanzer.Model().Slice(0, 24)))
             {
-                if (GetUnitValue.IsNormalEnemy(enemyType, SettingProperties.Randomize_BossModel))
+                if (GetUnitValue.EnemyType(Wanzer.Model().Slice(64, 2)) && SettingProperties.Randomize_BossModel)
                     MyDataTable.ValidEnemyId.Add(MyDataTable.EnemyId);
 
                 else
                     MyDataTable.InValidEnemyID.Add(MyDataTable.EnemyId);
 
-                if (GetUnitValue.IsNormalEnemy(enemyType))
+                if (GetUnitValue.EnemyType(Wanzer.Model().Slice(64, 2)))
                 {
                     RandomBody(SettingProperties.Randomize_BodyPart);
 
                     RandomWeapon(SettingProperties.Randomize_Weapons);
-                    
+
                     RandomBackPack(SettingProperties.Randomize_BackPack);
-                    
-                    fs.Seek(-128, SeekOrigin.Current);
-                    fs.Write(Wanzer.Model(), 0, Wanzer.Model().Length);
+
+                    fs.Seek(enemyAddresses[i], SeekOrigin.Begin);
+                    fs.Write(Wanzer.Model());
                 }
             }
         }
@@ -62,30 +64,31 @@ public class RandomEnemy
             return;
 
         // Randomize Head part
-        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHeadID>(), 68);
-        
-        // Randomize left hand part
-        if (Wanzer.Model().GetValue(70).Equals(0))
-            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHandsID>(), 70);
-        else
-            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID(), 70);
+        Wanzer.Model()[68] = (byte)GetObjectValue.RandomBodyID<PartsID.SpecialHeadID>();
 
-        // Randomize right hand part
-        if (Wanzer.Model().GetValue(72).Equals(0))
-            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.SpecialHandsID>(), 72);
+        // Randomize left hand part
+        if (Wanzer.Model()[70] == 0)
+            Wanzer.Model()[70] = (byte)GetObjectValue.RandomBodyID<PartsID.SpecialHandsID>();
+
         else
-            Wanzer.Model().SetValue(GetObjectValue.RandomBodyID(), 72);
+            Wanzer.Model()[70] = (byte)GetObjectValue.RandomBodyID();
+        
+        // Randomize right hand part
+        if (Wanzer.Model()[72] == 0)
+            Wanzer.Model()[72] = (byte)GetObjectValue.RandomBodyID<PartsID.SpecialHandsID>();
+
+        else
+            Wanzer.Model()[72] = (byte)GetObjectValue.RandomBodyID();
 
         // Randomize leg part
-        Wanzer.Model().SetValue(GetObjectValue.RandomBodyID<PartsID.LegsID>(), 74);
+        Wanzer.Model()[74] = (byte)GetObjectValue.RandomBodyID<PartsID.LegsID>();
     }
 
     private static void RandomBackPack(bool enable)
     {
         if (!enable)
             return;
-
-        Wanzer.Model().SetValue(GetObjectValue.BackPack(), 76);
+        Wanzer.Model()[76] = GetObjectValue.BackPack();
     }
 
     private static void RandomWeapon(bool enable)
@@ -93,10 +96,10 @@ public class RandomEnemy
         if (!enable)
             return;
 
-        byte leftArm = Wanzer.Model().ElementAt(78);
-        byte rightArm = Wanzer.Model().ElementAt(80);
-        byte leftShoulder = Wanzer.Model().ElementAt(82);
-        byte rightShoulder = Wanzer.Model().ElementAt(84);
+        byte leftArm = Wanzer.Model()[78];
+        byte rightArm = Wanzer.Model()[80];
+        byte leftShoulder = Wanzer.Model()[82];
+        byte rightShoulder = Wanzer.Model()[84];
 
 
         SetWeaponLeftArm(leftArm);
@@ -109,26 +112,22 @@ public class RandomEnemy
         // FireArm left Weapon
         if (leftArm >= 0x01 && leftArm <= 0x42 || leftArm >= 0x5B && leftArm <= 0x7E || leftArm == 0x97)
         {
-            Wanzer.Model().SetValue(GetObjectValue.FireArm_Weapon(), 78);
-            Wanzer.Model().SetValue((byte)0, 79);
-            return;
+            Wanzer.Model()[78] = GetObjectValue.FireArm_Weapon();
+            Wanzer.Model()[79] = 0;
         }
 
         // CloseCombat left Weapon
-        if (leftArm >= 0x43 && leftArm <= 0x5A || leftArm >= 0x7F && leftArm <= 0x96)
+        else if (leftArm >= 0x43 && leftArm <= 0x5A || leftArm >= 0x7F && leftArm <= 0x96)
         {
-            Wanzer.Model().SetValue(GetObjectValue.CloseCombat_Weapon(), 78);
-            Wanzer.Model().SetValue((byte)0, 79);
-            return;
+            Wanzer.Model()[78] = GetObjectValue.CloseCombat_Weapon();
+            Wanzer.Model()[79] = 0;
         }
     }
 
     private static void SetWeaponRightArm(byte rightArm)
     {
-        byte? checkValue = (byte?)Wanzer.Model().GetValue(81);
-
         // exit if unit already has an explotion set.
-        if (_Explotion.Contains(rightArm) && checkValue == 1)
+        if (_Explotion.Contains(rightArm) && Wanzer.Model()[81] == 1)
             return;
 
         // explotion on right Weapon if true in user setting
@@ -136,30 +135,30 @@ public class RandomEnemy
         {
             byte explotion = (byte)_Explotion[MyDataTable.Rnd.Next(_Explotion.Count)];
 
-            if (explotion == 0)
+            if (explotion != 0)
             {
-                Wanzer.Model().SetValue(explotion, 80);
-                Wanzer.Model().SetValue((byte)0, 81);
+                Wanzer.Model()[80] = explotion;
+                Wanzer.Model()[81] = 1;
                 return;
             }
 
-            Wanzer.Model().SetValue(explotion, 80);
-            Wanzer.Model().SetValue((byte)1, 81);
+            Wanzer.Model()[80] = explotion;
+            Wanzer.Model()[81] = 0;
             return;
         }
 
         // FireArm right Weapon
         if (rightArm >= 0x01 && rightArm <= 0x42 || rightArm >= 0x5B && rightArm <= 0x7E || rightArm == 0x97)
         {
-            Wanzer.Model().SetValue(GetObjectValue.FireArm_Weapon(), 80);
-            Wanzer.Model().SetValue((byte)0, 81);
+            Wanzer.Model()[80] = GetObjectValue.FireArm_Weapon();
+            Wanzer.Model()[81] = 0;
         }
 
         // CloseCombat right Weapon
         else if (rightArm >= 0x43 && rightArm <= 0x5A || rightArm >= 0x7F && rightArm <= 0x96)
         {
-            Wanzer.Model().SetValue(GetObjectValue.CloseCombat_Weapon(), 80);
-            Wanzer.Model().SetValue((byte)0, 81);
+            Wanzer.Model()[80] = GetObjectValue.CloseCombat_Weapon();
+            Wanzer.Model()[81] = 0;
         }
     }
 
@@ -168,15 +167,15 @@ public class RandomEnemy
         // Launcher left shoulder weapon
         if (leftShoulder >= 0x01 && leftShoulder <= 0x2A)
         {
-            MyDataTable.Wanzer.Model().SetValue(GetObjectValue.Launcher_Weapon(), 82);
-            MyDataTable.Wanzer.Model().SetValue((byte)0, 83);
+            MyDataTable.Wanzer.Model()[82] = GetObjectValue.Launcher_Weapon();
+            MyDataTable.Wanzer.Model()[83] = 0;
         }
 
         // Launcher right shoulder weapon
         else if (rightShoulder >= 0x01 && rightShoulder <= 0x2A)
         {
-            MyDataTable.Wanzer.Model().SetValue(GetObjectValue.Launcher_Weapon(), 84);
-            MyDataTable.Wanzer.Model().SetValue((byte)0, 85);
+            MyDataTable.Wanzer.Model()[84] = GetObjectValue.Launcher_Weapon();
+            MyDataTable.Wanzer.Model()[85] = 0;
         }
     }
 }

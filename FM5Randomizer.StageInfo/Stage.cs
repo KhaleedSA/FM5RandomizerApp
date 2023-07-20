@@ -79,7 +79,7 @@ public class Stage
         ST72 = 0x7B168A0,
         ST73 = 0x7CC38A0,
         ST74 = 0x7E9E090,
-        ST75 = 0x823A050,
+        //ST75 = 0x823A050,
         //ST76 = 0x827D050,
         //ST77 = 0x82C0050,
         //ST78 = 0x8303050,

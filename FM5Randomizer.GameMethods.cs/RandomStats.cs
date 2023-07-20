@@ -6,7 +6,7 @@ namespace FM5Randomizer.GameMethods;
 
 public class RandomStats
 {
-    //private static readonly List<byte> SelectionPilotID = new(6) { 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20 };
+    private static readonly List<byte> SelectionPilotID = new(6) { 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20 };
     private static byte[] ReadOldCoords = new byte[2];
     private static byte[] ReadNewCoords = new byte[2];
     private const byte MaxPilotLvl = 50;
@@ -18,16 +18,14 @@ public class RandomStats
 
     public static void RandomEnemyStats(FileStream fs)
     {
-        fs.Read(Wanzer.Stats(), 0, Wanzer.Stats().Length);
+        fs.Read(Wanzer.Stats());
 
-        if (!Wanzer.Stats().ElementAt(0).Equals(0) && !MyDataTable.InValidEnemyID.Contains(Wanzer.Stats().ElementAt(1)))
+        if (!SelectionPilotID.Contains(Wanzer.Stats()[1]) && Wanzer.Stats()[0] != 0 && !MyDataTable.InValidEnemyID.Contains(Wanzer.Stats()[1]))
         {
             WriteNewEnemyStats();
             fs.Seek(-256, SeekOrigin.Current);
-            fs.Write(Wanzer.Stats(), 0, Wanzer.Stats().Length);
+            fs.Write(Wanzer.Stats());
         }
-
-        Array.Clear(Wanzer.Stats(), 0, Wanzer.Stats().Length);
     }
 
     private static void WriteNewEnemyStats()
@@ -41,11 +39,11 @@ public class RandomStats
 
         // Randomize pilot model
         if (SettingProperties.Randomize_UnitModel || SettingProperties.Randomize_BossModel)
-            Wanzer.Stats().SetValue(GetObjectValue.RandomModelID(MyDataTable.ValidEnemyId), 1);
+            Wanzer.Stats()[1] = GetObjectValue.RandomModelID(MyDataTable.ValidEnemyId);
 
         // Randomize pilot lvl
         if (SettingProperties.Randomize_PilotLvl)
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinPilotLvl, MaxPilotLvl), 30);
+            Wanzer.Stats()[30] = (byte)MyDataTable.Rnd.Next(MinPilotLvl, MaxPilotLvl);
 
 
         RandomizeWanzerEqupmentLvl();
@@ -62,10 +60,10 @@ public class RandomStats
     {
         if (SettingProperties.Randomize_HealthValue)
         {
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 8);
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 10);
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 12);
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth), 14);
+            Wanzer.Stats()[8] = (byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth);
+            Wanzer.Stats()[10] = (byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth);
+            Wanzer.Stats()[12] = (byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth);
+            Wanzer.Stats()[14] = (byte)MyDataTable.Rnd.Next(MinHealth, MaxHealth);
         }
     }
 
@@ -76,10 +74,10 @@ public class RandomStats
     {
         if (SettingProperties.Randomize_EquipmentsLvl)
         {
-            Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinLvl, MaxLvl), 93);
+            Wanzer.Stats()[93] = (byte)MyDataTable.Rnd.Next(MinLvl, MaxLvl);
 
             for (int i = 0; i < 2; i++)
-                Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(MinLvl, MaxLvl), 96 + i);
+                Wanzer.Stats()[96 + i] = (byte)MyDataTable.Rnd.Next(MinLvl, MaxLvl);
         }
     }
 
@@ -93,13 +91,13 @@ public class RandomStats
             if (SettingProperties.Skills_FixedNumber > 1 && SettingProperties.Skills_FixedNumber < 16)
             {
                 for (int i = 0; i < SettingProperties.Skills_FixedNumber; i++)
-                    Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(0, 100), 192 + i);
+                    Wanzer.Stats()[192 + i] = (byte)MyDataTable.Rnd.Next(0, 100);
             }
 
             else
             {
                 for (int i = 0; i < 16; i++)
-                    Wanzer.Stats().SetValue((byte)MyDataTable.Rnd.Next(0, 100), 192 + i);
+                    Wanzer.Stats()[192 + i] = (byte)MyDataTable.Rnd.Next(0, 100);
             }
         }
     }
@@ -114,13 +112,13 @@ public class RandomStats
             if (SettingProperties.Items_FixedNumber > 1 && SettingProperties.Items_FixedNumber < 8)
             {
                 for (int i = 0; i < SettingProperties.Items_FixedNumber; i++)
-                    Wanzer.Stats().SetValue(GetObjectValue.Repair_Ammo(), 208 + i);
+                    Wanzer.Stats()[208 + i] = GetObjectValue.Repair_Ammo();
             }
 
             else
             {
                 for (int i = 0; i < 8; i++)
-                    Wanzer.Stats().SetValue(GetObjectValue.Repair_Ammo(), 208 + i);
+                    Wanzer.Stats()[208 + i] = GetObjectValue.Repair_Ammo();
             }
         }
     }
@@ -131,8 +129,8 @@ public class RandomStats
     private static void FixCoordinate()
     {
         // Get the enemy's current coordinates.
-        byte? enemyCoordinate_X = (byte?)Wanzer.Stats().GetValue(18);
-        byte? enemyCoordinate_Y = (byte?)Wanzer.Stats().GetValue(19);
+        byte? enemyCoordinate_X = Wanzer.Stats()[18];
+        byte? enemyCoordinate_Y = Wanzer.Stats()[19];
 
         // Store the old coordinates.
         ReadOldCoords?.SetValue(enemyCoordinate_X, 0);
@@ -142,7 +140,7 @@ public class RandomStats
         ReadNewCoords = SoftLockFixer.SetNew_Coordinates(MyDataTable.ReadStageAddress, ReadOldCoords);
 
         // Write the new Coordinates.
-        Wanzer.Stats().SetValue(ReadNewCoords.ElementAt(0), 18);
-        Wanzer.Stats().SetValue(ReadNewCoords.ElementAt(1), 19);
+        Wanzer.Stats()[18] = ReadNewCoords.ElementAt(0);
+        Wanzer.Stats()[19] = ReadNewCoords.ElementAt(1);
     }
 }

@@ -5,16 +5,16 @@ namespace FM5Randomizer.GameMethods;
 
 public class GetUnitValue
 {
-    public static bool IsEmptyString(byte[] checkValues)
+    public static bool IsEmptyNameModel(Span<byte> checkValues)
     {
         string convertToString = Encoding.ASCII.GetString(checkValues).Trim('\0');
 
         return string.IsNullOrEmpty(convertToString) ? true : false;
     }
 
-    public static bool IsNormalEnemy(byte[] checkValue, bool withBosses = false)
+    public static bool EnemyType(Span<byte> checkValue, bool withBosses = false)
     {
-        return BitConverter.ToInt16(checkValue, 0) switch
+        return BitConverter.ToInt16(checkValue) switch
         {
             (short)SpawnType.None => false,
             (short)SpawnType.Boss_00 => withBosses ? true : false,

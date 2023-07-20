@@ -10,6 +10,7 @@ public class MyDataTable
 
     public class ObjectSize
     {
+        public const string Player_Script = nameof(Player_Script);
         public const string Model_Script = nameof(Model_Script);
         public const string Model_Entity = nameof(Model_Entity);
         public const string Stats_Script = nameof(Stats_Script);
@@ -17,7 +18,7 @@ public class MyDataTable
         public const string Seek_Stats = nameof(Seek_Stats);
 
         private static readonly Dictionary<string, int> _size = new() 
-        {{Model_Script, 3328}, {Model_Entity, 128}, {Stats_Script, 14848/*Stats_Script, 16128*/}, {Stats_Entity, 256}, {Seek_Stats, 5632/*Seek_Stats, 4352*/}};
+        {{Player_Script, 768}, {Model_Script, 3328}, {Model_Entity, 128}, {/*Stats_Script, 14848*/Stats_Script, 16384}, {Stats_Entity, 256}, {/*Seek_Stats, 5632*/Seek_Stats, 4096}};
 
         public static int GetSize(string kName) => _size[kName];
     }
@@ -26,21 +27,21 @@ public class MyDataTable
     {
         static byte[]? _stats;
         static byte[]? _model;
-
-        public static byte[] Stats()
+        
+        public static Span<byte> Stats()
         {
             if (_stats == null)
-                return _stats = new byte[256];
+                return _stats = new byte[ObjectSize.GetSize(ObjectSize.Stats_Entity)];
 
-            return _stats;
+            return _stats.AsSpan();
         }
         
-        public static byte[] Model()
+        public static Span<byte> Model()
         {
             if (_model == null)
-                return _model = new byte[128];
+                return _model = new byte[ObjectSize.GetSize(ObjectSize.Model_Entity)];
 
-            return _model;
+            return _model.AsSpan();
         }
     }
 
