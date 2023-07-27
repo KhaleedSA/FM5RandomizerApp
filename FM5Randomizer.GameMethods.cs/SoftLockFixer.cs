@@ -43,6 +43,16 @@ public class SoftLockFixer
             (long)Stage.StageAddress.ST44 => FixStage44(coords),
             (long)Stage.StageAddress.ST45 => FixStage45(coords),
             (long)Stage.StageAddress.ST49 => FixStage49(coords),
+            (long)Stage.StageAddress.ST87 => FixStage04(coords),
+            (long)Stage.StageAddress.ST89 => FixStage06(coords),
+            (long)Stage.StageAddress.ST90 => FixStage07(coords),
+            (long)Stage.StageAddress.ST94 => FixStage11(coords),
+            (long)Stage.StageAddress.ST100 => FixStage17(coords),
+            (long)Stage.StageAddress.ST102 => FixStage19(coords),
+            (long)Stage.StageAddress.ST106 => FixStage23(coords),
+            (long)Stage.StageAddress.ST118 => FixStage44(coords),
+            (long)Stage.StageAddress.ST128 => FixStage45(coords),
+            (long)Stage.StageAddress.ST132 => FixStage49(coords),
             _ => coords,
         };
     }

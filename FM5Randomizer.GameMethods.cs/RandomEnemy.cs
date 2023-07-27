@@ -49,6 +49,7 @@ public class RandomEnemy
         
         var startingAddress = fs.Position = enemyAddresses.FirstOrDefault() + ObjectSize.GetSize(ObjectSize.Seek_Stats);
 
+        if (startingAddress == 163432592) { }
         var entityAddresses = GetObjectValue.GetListOfAddresses(fs, startingAddress, ObjectSize.GetSize(ObjectSize.Stats_Script), ObjectSize.GetSize(ObjectSize.Stats_Entity));
 
         for (int i = 0; i < entityAddresses.Count; i++)
