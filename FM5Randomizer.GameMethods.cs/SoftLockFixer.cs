@@ -139,6 +139,10 @@ public class SoftLockFixer
         _PotentialSoftLocks.Add(3, new Coordinates(0x29, 0x1F));
         _PotentialSoftLocks.Add(4, new Coordinates(0x1E, 0x29));
         _PotentialSoftLocks.Add(5, new Coordinates(0x03, 0x1C));
+        _PotentialSoftLocks.Add(6, new Coordinates(0x08, 0x06));
+        _PotentialSoftLocks.Add(7, new Coordinates(0x24, 0x1F));
+        _PotentialSoftLocks.Add(8, new Coordinates(0x03, 0x0C));
+        _PotentialSoftLocks.Add(9, new Coordinates(0x0B, 0x29));
         #endregion
 
         #region Fix Soft Locks Coordinates
@@ -148,6 +152,10 @@ public class SoftLockFixer
         _FixSoftLocks.Add(3, new Coordinates(0x26, 0x17));
         _FixSoftLocks.Add(4, new Coordinates(0x17, 0x28));
         _FixSoftLocks.Add(5, new Coordinates(0x05, 0x17));
+        _FixSoftLocks.Add(6, new Coordinates(0x15, 0x03));
+        _FixSoftLocks.Add(7, new Coordinates(0x25, 0x17));
+        _FixSoftLocks.Add(8, new Coordinates(0x05, 0x14));
+        _FixSoftLocks.Add(9, new Coordinates(0x14, 0x28));
         #endregion
 
         return Coordinates_Fixer(_PotentialSoftLocks, _FixSoftLocks, coords);
